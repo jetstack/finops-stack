@@ -1,0 +1,9 @@
+mkdocs
+mkdocs-material
+minify==66.0.2
+mkdocs-include-markdown-plugin
+mkdocs-material-extensions==1.3.1
+mkdocs-minify-plugin==0.7.1
+pymdown-extensions==10.5
+readtime==3.0.0
+paginate==0.5.6

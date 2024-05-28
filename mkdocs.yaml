@@ -1,0 +1,86 @@
+site_name: The FinOps Stack
+site_url: https://finops-stack.jetstack.io
+site_description: FinOps made Easy
+
+# repo
+repo_name: finops-stack
+repo_url: https://github.com/jetstack/finops-stack
+
+copyright: Made with ❤️ At Venafi Jetstack Consult. Special thanks to [credits](credits.md)
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/jetstack/
+
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - Docs: intro.md
+  - Install: install.md
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.details
+  - admonition
+  - pymdownx.details
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+
+theme:
+  name: material
+  custom_dir: theme/overrides
+  language: en
+  font:
+    text: Mulish
+  logo: assets/jetstack_stripes.svg
+  favicon: assets/jetstack_stripes.svg
+  include_search_page: false
+  features:
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate
+    - navigation.footer
+    - navigation.indexes
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+
+  palette:
+    - primary: deep purple
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+    - primary: custom
+      scheme: venafi
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+plugins:
+  - offline
+  - privacy
+  - minify:
+      minify_html: true
+  - include-markdown
+
+# use_directory_urls: true
+docs_dir: content/

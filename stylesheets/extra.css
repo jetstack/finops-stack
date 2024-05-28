@@ -1,0 +1,9 @@
+[data-md-color-scheme="venafi"] {
+    --md-primary-fg-color:        #FF6333;
+    --md-primary-fg-color--light: #F2F3F8;
+    --md-primary-fg-color--dark:  #3D3E62;
+  }
+
+[data-md-color-scheme="slate"] {
+    --md-hue: 210;
+  }
