@@ -1,0 +1,87 @@
+site_name: The FinOps Stack
+site_url: https://finops-stack.jetstack.io
+site_description: FinOps made Easy
+
+# repo
+repo_name: finops-stack
+repo_url: https://github.com/jetstack/finops-stack
+
+copyright: Made with ❤️ At Venafi Jetstack Consult.
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/jetstack/
+    # - icon: assets/jetstack_stripes.svg
+    #   link: https://jetstack.io/
+
+nav:
+  - Home: index.md
+  - Introduction:
+      - Overview: intro.md
+      - Architecture: architecture.md
+      - Policies: policies.md
+      - Working with GKE Autopilot: distribution-gke-autopilot.md
+  - Installation:
+      - install.md
+  - credit.md
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.details
+  - admonition
+  - pymdownx.details
+  - md_in_html
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+
+theme:
+  name: material
+  custom_dir: theme/overrides
+  language: en
+  font:
+    text: Mulish
+  logo: assets/icon-jetstack-consult-white.svg
+  favicon: assets/icon-jetstack-consult.svg
+  include_search_page: false
+  features:
+    - announce.dismiss
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate
+    - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+    # - toc.integrate
+
+plugins:
+  # - privacy
+  - social
+  - git-revision-date-localized:
+      type: date
+      enable_creation_date: true
+  - minify:
+      minify_html: true
+  - include-markdown
+
+use_directory_urls: true
+docs_dir: content/

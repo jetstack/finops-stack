@@ -1,0 +1,17 @@
+updater:
+  resources:
+    {
+      "limits": { "cpu": "50m", "memory": "75Mi" },
+      "requests": { "cpu": "50m", "memory": "52Mi" },
+    }
+recommender:
+  resources:
+    {
+      "limits": { "cpu": "50m", "memory": "75Mi" },
+      "requests": { "cpu": "50m", "memory": "52Mi" },
+    }
+  extraArgs:
+    prometheus-address: http://gmp-proxy/
+    storage: prometheus
+admissionController:
+  enabled: false

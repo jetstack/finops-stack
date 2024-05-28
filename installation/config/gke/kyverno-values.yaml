@@ -1,0 +1,19 @@
+features:
+  backgroundScan:
+    skipResourceFilters: false # Important so that background Scan's Exclude Namespaces, etc
+config:
+  resourceFiltersIncludeNamespaces:
+    - kube-system
+    - gmp-public
+    - gke-managed-system
+    - gke-gmp-system
+  webhooks:
+    - namespaceSelector:
+        matchExpressions:
+          - key: kubernetes.io/metadata.name
+            operator: NotIn
+            values:
+              - kube-system
+              - gmp-public
+              - gke-managed-system
+              - gke-gmp-system

@@ -1,0 +1,61 @@
+name:  Build and Deploy Site
+on:
+  workflow_dispatch: # Enable manual generation
+  pull_request:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "!chart/**"
+      - "!scripts/**"
+      - "content/**"
+      - "theme/**"
+      - "mkdocs.yaml"
+      - "requirements.txt"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-docs
+  cancel-in-progress: true
+
+jobs:
+  build_and_deploy_hugo_site:
+    runs-on: ubuntu-latest
+
+    name: Build and Deploy Static site
+
+    steps:
+      - name: Checkout repo on source_branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: "0"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+          cache: 'pip'
+
+
+      - uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+
+      - name: Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build
+        run: mkdocs build
+
+      - name: Publish to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/pages-action@v1
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_KEY }}
+          accountId: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
+          projectName: ${{secrets.CLOUDFLARE_PROJECT_NAME}}
+          directory: "./site/"
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          wranglerVersion: '3'

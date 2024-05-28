@@ -1,0 +1,8 @@
+replicaCount: 1
+serviceAccountName: grafana
+image:
+  repository: europe-west1-docker.pkg.dev/jetstack-steve-judd/envoy-proxy/envoy
+  tag: v1.31
+  pullPolicy: IfNotPresent
+gmpProjectId: dummy-projectid
+resources: {}

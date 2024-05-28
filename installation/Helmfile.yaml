@@ -1,0 +1,167 @@
+repositories:
+- name: kyverno
+  url: https://kyverno.github.io/kyverno/
+- name: opencost
+  url: https://opencost.github.io/opencost-helm-chart
+- name: prometheus-opencost-exporter
+  url: https://prometheus-community.github.io/helm-charts
+- name: grafana
+  url: https://grafana.github.io/helm-charts
+- name: vpa
+  url: https://charts.fairwinds.com/stable
+- name: cert-manager
+  url: https://charts.jetstack.io
+- name: fairwinds-stable
+  url: https://charts.fairwinds.com/stable
+
+---
+helmDefaults:
+  wait: true
+  timeout: 1200
+---
+environments:
+  default:
+    values:
+    - ./config/common/enabled.yaml # edit this to specify which of the releases to install
+---
+releases:
+- name: kyverno
+  version: "3.2.6"
+  chart: kyverno/kyverno
+  condition: kyverno.enabled
+  namespace: finops-stack
+  values:
+  - "./config/common/kyverno-values.yaml"
+  - "./config/{{ requiredEnv "HOST_ENV" }}/kyverno-values.yaml"  
+
+- name: finops-policies
+  version: "0.0.6"
+  chart: "cert-manager/finops-policies"
+  condition: finops-policies.enabled
+  namespace: finops-stack
+  disableValidationOnInstall: true
+  needs:
+  - kyverno
+
+- name: cert-manager
+  version: v1.15.3
+  chart: cert-manager/cert-manager
+  condition: cert-manager.enabled
+  namespace: cert-manager
+  values:
+  - "./config/common/cert-manager-values.yaml"
+  - "./config/{{ requiredEnv "HOST_ENV" }}/cert-manager-values.yaml"
+  - global:
+      leaderElection:
+        namespace: cert-manager
+      commonLabels:
+        cost-center-label: "xyz"
+  - serviceAccount:
+      annotations:
+        {{ requiredEnv "CERT_MANAGER_SA_ANNOTATION" }}
+
+- name: cert-manager-config
+  version: "0.1.0"
+  chart: "../charts/cert-manager-config"
+  condition: cert-manager.enabled
+  namespace: finops-stack
+  disableValidationOnInstall: true
+  needs:
+  - cert-manager/cert-manager
+  values:
+  - email: {{ requiredEnv "CERT_MANAGER_EMAIL" }}
+  - gcpProjectID: {{ requiredEnv "GCP_PROJECT" }}
+  - grafanaTLSCert:
+      hostname: {{ requiredEnv "GRAFANA_FQDN" }}
+
+- name: grafana
+  version: "8.4.7"
+  chart: grafana/grafana
+  condition: grafana.enabled
+  namespace: finops-stack
+  values:
+  - "./config/common/grafana-values.yaml"
+  - "./config/{{ requiredEnv "HOST_ENV" }}/grafana-values.yaml"
+  - adminUser: {{ requiredEnv "GRAFANA_ADMIN_USER" }}
+  - adminPassword: {{ requiredEnv "GRAFANA_ADMIN_PW" }}
+  - serviceAccount:
+      annotations:
+        {{ requiredEnv "GRAFANA_SA_ANNOTATION" }}
+
+  # If you don't require ingress via an FQDN remove this ingress section
+  - ingress:
+      enabled: {{ requiredEnv "GRAFANA_INGRESS" }}
+      annotations:
+        kubernetes.io/ingress.global-static-ip-name: {{ requiredEnv "GRAFANA_PUBLIC_IP_NAME" }}
+      hosts:
+      - {{ requiredEnv "GRAFANA_FQDN" }}
+    # If you don't require https access to the Grafana dashboard remove this tls section
+      tls:
+      - secretName: {{ requiredEnv "GRAFANA_FQDN" }}-tls
+        hosts:
+        - {{ requiredEnv "GRAFANA_FQDN" }}
+  needs:
+  - cert-manager/cert-manager
+
+- name: vpa
+  version: "4.5.0"
+  chart: "vpa/vpa"
+  condition: vpa.enabled
+  namespace: finops-stack
+  values:
+  - "./config/common/vpa-values.yaml"
+
+- name: opencost
+  version: "1.42.0"
+  chart: "opencost/opencost"
+  condition: opencost.enabled
+  namespace: finops-stack
+  values:
+  - "./config/{{ requiredEnv "HOST_ENV" }}/opencost-values.yaml"
+  - opencost:
+      exporter:
+        cloudProviderApiKey: {{ requiredEnv "CSP_API_KEY" }}
+
+- name: gmp-proxy
+  version: "0.1.0"
+  chart: "../charts/gmp-proxy"
+  condition: gmp-proxy.enabled
+  namespace: finops-stack
+  needs: 
+  - grafana
+  values:
+  - "./config/common/gmp-proxy-values.yaml"
+  - gmpProjectId: {{ requiredEnv "GCP_PROJECT" }}
+
+- name: prometheus-opencost-exporter
+  version: "0.1.1"
+  chart: "prometheus-opencost-exporter/prometheus-opencost-exporter"
+  condition: opencost-exporter.enabled
+  namespace: finops-stack
+  needs: 
+  - gmp-proxy
+  values:
+  - "./config/common/prometheus-opencost-exporter-values.yaml"
+  - "./config/{{ requiredEnv "HOST_ENV" }}/prometheus-opencost-exporter-values.yaml"
+  - opencost:
+      exporter:
+        cloudProviderApiKey: {{ requiredEnv "CSP_API_KEY" }}
+
+- name: finops-stack-opencost-templates
+  version: "0.1.0"
+  chart: "../charts/opencost-config"
+  condition: opencost-templates.enabled
+  namespace: finops-stack
+  disableValidationOnInstall: true
+  values:
+  - "./config/{{ requiredEnv "HOST_ENV" }}/opencost-templates-values.yaml"
+
+- name: goldilocks
+  version: "9.0.0"
+  chart: fairwinds-stable/goldilocks
+  condition: goldilocks.enabled
+  namespace: finops-stack
+  values:
+  - "./config/common/goldilocks-values.yaml"
+
+ 

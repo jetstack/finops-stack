@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: grafana-ingress-tls
+  labels:
+    {{- include "cert-manager-config.labels" $ | nindent 4}}
+spec:
+  secretName: {{ .Values.grafanaTLSCert.hostname }}-tls
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod
+  dnsNames:
+  - {{ .Values.grafanaTLSCert.hostname }}
