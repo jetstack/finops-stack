@@ -7,3 +7,4 @@ mkdocs-minify-plugin==0.7.1
 pymdown-extensions==10.5
 readtime==3.0.0
 paginate==0.5.6
+mkdocs-git-revision-date-localized-plugin

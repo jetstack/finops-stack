@@ -1,5 +1,11 @@
-[data-md-color-scheme="jetstack-consult"] {
+[data-md-color-scheme="bob"] {
     --md-primary-fg-color:        #EFF0F6;
     --md-primary-fg-color--light: #7545EF;
+    --md-primary-fg-color--dark:  #3D3E62;
+  }
+
+:root {
+    --md-primary-fg-color:        #7545EF;
+    --md-primary-fg-color--light: #EFF0F6;
     --md-primary-fg-color--dark:  #3D3E62;
   }
