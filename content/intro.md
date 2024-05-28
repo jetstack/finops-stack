@@ -1,3 +1,4 @@
 ---
-title: Home
+title: Documentation
+name: Documentation
 ---

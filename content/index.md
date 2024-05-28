@@ -1,4 +1,4 @@
 ---
+title: The FinOps Stack
 template: home.html
-title: FinOps Stack
 ---

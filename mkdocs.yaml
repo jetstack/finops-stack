@@ -6,7 +6,7 @@ site_description: FinOps made Easy
 repo_name: finops-stack
 repo_url: https://github.com/jetstack/finops-stack
 
-copyright: Made with ❤️ At Venafi Jetstack Consult. Special thanks to [credits](credits.md)
+copyright: Made with ❤️ At Venafi Jetstack Consult.
 
 extra:
   social:
@@ -15,7 +15,6 @@ extra:
 
 nav:
   - Home: index.md
-  - Architecture: architecture.md
   - Docs: intro.md
   - Install: install.md
 
@@ -33,6 +32,7 @@ markdown_extensions:
   - pymdownx.details
   - admonition
   - pymdownx.details
+  - md_in_html
   - footnotes
   - meta
   - toc:
@@ -48,6 +48,7 @@ theme:
   favicon: assets/jetstack_stripes.svg
   include_search_page: false
   features:
+    - announce.dismiss
     - content.code.copy
     - content.code.select
     - content.code.annotate
@@ -62,25 +63,27 @@ theme:
     - search.suggest
     - toc.follow
 
-  palette:
-    - primary: deep purple
-      scheme: slate
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
+  # palette:
+  #   - primary: deep purple
+  #     scheme: slate
+  #     toggle:
+  #       icon: material/brightness-4
+  #       name: Switch to light mode
 
-    - primary: custom
-      scheme: venafi
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
+  # - primary: custom
+  #   scheme: venafi
+  #   toggle:
+  #     icon: material/brightness-7
+  #     name: Switch to dark mode
 
 plugins:
-  - offline
   - privacy
+  - social:
+      cards_layout: default
+
   - minify:
       minify_html: true
   - include-markdown
 
-# use_directory_urls: true
+use_directory_urls: true
 docs_dir: content/
