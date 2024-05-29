@@ -23,6 +23,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: 3.x
+          cache: 'pip'
+
 
       - uses: actions/cache@v4
         with:
@@ -30,7 +32,6 @@ jobs:
           path: .cache
           restore-keys: |
             mkdocs-material-
-
 
       - name: Dependencies
         run: pip install -r requirements.txt
