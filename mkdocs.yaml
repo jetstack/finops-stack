@@ -69,8 +69,7 @@ theme:
 
 plugins:
   # - privacy
-  - social:
-      cards_layout: default
+  - social
   - git-revision-date-localized:
       type: date
       enable_creation_date: true
