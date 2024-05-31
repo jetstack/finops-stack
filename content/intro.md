@@ -8,25 +8,17 @@ In today's dynamic financial landscape, organisations face the constant challeng
 
 ## Overview
 
-FinOps Stack is a comprehensive, turnkey solution designed to revolutionise financial operations (FinOps) by integrating a suite of applications into a unified platform. Our goal is to empower organisations with the tools they need to manage, visualise, and optimise their financial resources in a fast-paced and ever-changing environment. FinOps Stack leverages advanced technologies to deliver real-time insights, enabling teams to make informed decisions swiftly and efficiently.
+FinOps Stack is a comprehensive, turnkey solution designed to revolutionise financial operations (FinOps) by integrating a suite of applications into a unified platform. Our goal is to empower organisations with the tools they need to manage, visualise, and optimise their cloud resources in a fast-paced and ever-changing environment. FinOps Stack leverages advanced technologies to deliver real-time insights, enabling teams to make informed decisions swiftly and efficiently.
 
 ## Key Features and Capabilities
 
 ### Unified Financial Dashboard
 
-FinOps Stack offers a single, intuitive dashboard that aggregates financial data from various sources. This centralised view provides a comprehensive snapshot of the organisation's financial health, facilitating easy monitoring and management.
+FinOps Stack offers a range of, intuitive dashboard that aggregates workload data from various sources. This centralised view provides a comprehensive snapshot of the organisation's financial health, facilitating easy monitoring and management.
 
 ### Real-time Spend Visualisation
 
-Understanding where and how resources are being utilised is crucial for effective financial management. FinOps Stack provides real-time visualisation tools that display spending patterns, highlighting key areas of expenditure and potential cost-saving opportunities.
-
-### Advanced Analytics and Reporting
-
-FinOps Stack incorporates powerful analytics engines that process financial data to generate detailed reports. These insights help teams identify trends, forecast future expenses, and make data-driven decisions to optimise financial performance.
-
-### Automated Optimisation Suggestions
-
-To streamline financial operations, FinOps Stack offers automated optimisation recommendations. By analysing spending data, the platform suggests actionable steps to reduce costs and improve efficiency, ensuring resources are allocated where they are needed most.
+Understanding where and how resources are being utilised is crucial for effective financial management. FinOps Stack provides (near) real-time visualisation tools that display spending patterns, highlighting key areas of expenditure and potential cost-saving opportunities.
 
 ### Scalability and Flexibility
 

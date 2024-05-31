@@ -19,7 +19,7 @@ nav:
   - Home: index.md
   - Documentation:
       - intro.md
-      - Install: install.md
+      - Installation: install.md
       - Architecture: architecture.md
       - Selection: selection.md
   - credit.md

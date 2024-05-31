@@ -8,4 +8,5 @@ this page serves as a homage back to the maintainers and contributors of these t
 - [Prometheus](https://prometheus.io)
 - [Grafana](https://grafana.com/grafana/)
 - [MkDocs Material](https://squidfunk.github.io/mkdocs-material/)
+- [Vertical Pod Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler)
 - Inspiration from [Backstack](https://backstack.dev/)
