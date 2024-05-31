@@ -5,7 +5,8 @@ from diagrams.onprem.monitoring import Prometheus, Grafana
 from diagrams.onprem.client import Users
 from diagrams.custom import Custom
 
-from diagrams.k8s.compute import Deploy
+from diagrams.k8s.compute import Deploy, StatefulSet, Cronjob
+from diagrams.k8s.clusterconfig import LimitRange
 from diagrams.k8s.others import CRD
 from diagrams.generic.place import Datacenter
 
@@ -18,6 +19,14 @@ with Diagram("Architecture",
     users = Users("Users")
 
     with Cluster("Cluster"):
+        with Cluster("[ns] applications"):
+          a1 = Deploy("App1")
+          a2 = StatefulSet("App2")
+          a3 = Cronjob("App3")
+          l = LimitRange("limit-ranger")
+          vpa = CRD("VPA")
+          a1-Edge(color="transparent")-a2-Edge(color="transparent")
+          a3-Edge(color="transparent")-l-Edge(color="transparent")-vpa
         with Cluster("[ns] finops-stack"):
             prom = Prometheus("Prometheus")
             graf = Grafana("Grafana")
