@@ -17,8 +17,12 @@ extra:
 
 nav:
   - Home: index.md
-  - Docs: intro.md
-  - Install: install.md
+  - Documentation:
+      - intro.md
+      - Install: install.md
+      - Architecture: architecture.md
+      - Selection: selection.md
+  - credit.md
 
 extra_css:
   - stylesheets/extra.css

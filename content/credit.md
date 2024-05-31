@@ -7,3 +7,5 @@ this page serves as a homage back to the maintainers and contributors of these t
 
 - [Prometheus](https://prometheus.io)
 - [Grafana](https://grafana.com/grafana/)
+- [MkDocs Material](https://squidfunk.github.io/mkdocs-material/)
+- Inspiration from [Backstack](https://backstack.dev/)
