@@ -1,10 +1,11 @@
 # Monitoring Selection
 
-## Capability: [Allocation](https://www.finops.org/framework/capabilities/allocation/), [Reporting and Analytics](https://www.finops.org/framework/capabilities/reporting-analytics/)
+**Capability**: [Allocation](https://www.finops.org/framework/capabilities/allocation/), [Reporting and Analytics](https://www.finops.org/framework/capabilities/reporting-analytics/)
 
 ## **Aims to understand**: What are we spending where?
 
 Should cover:
+
 - Spend
 - Cost-allocation
 - Gathering and visualising this data
@@ -13,8 +14,8 @@ Should cover:
 
 ### [OpenCost](https://www.opencost.io/)
 
-“A vendor-neutral open source project for measuring and allocating cloud infrastructure and container costs in real time”.
-Community recognition: A CNCF Sandbox Project, and part of FinOps Foundation’s Landscape, this project has strong credibility in this space.
+"A vendor-neutral open source project for measuring and allocating cloud infrastructure and container costs in real time".
+Community recognition: A CNCF Sandbox Project, and part of FinOps Foundation's Landscape, this project has strong credibility in this space.
 Requires Prometheus to be installed.
 
 **License**: Apache
@@ -22,7 +23,7 @@ Requires Prometheus to be installed.
 
 **Provides**: metrics and visibility.
 Does not provide: recommendations/reports (these are in Kubecost free).
-Requires user configuration to get started (can’t install and get running without a GCP api key if using google cloud - autodetected).
+Requires user configuration to get started (can't install and get running without a GCP api key if using google cloud - autodetected).
 **Installation**: first Prometheus, then Cloud provider configuration, then opencost.
 
 ### [KubeCost](https://www.kubecost.com/) (free tier)
@@ -37,15 +38,16 @@ Get data/running ui on install without any preconfiguration.
 
 ### [Crane](https://gocrane.io/)
 
-“A FinOps Platform for Cloud Resource Analytics and Economics in Kubernetes clusters.”
-Community recognition: On CNCF Landscape, not a CNCF Project, not on FinOps Foundation’s Landscape.
+"A FinOps Platform for Cloud Resource Analytics and Economics in Kubernetes clusters."
+Community recognition: On CNCF Landscape, not a CNCF Project, not on FinOps Foundation's Landscape.
 **License**: Apache
 **Level of Maintenance**: last release Jul 2023. Does not appear actively maintained.
 
 ### [Komiser](https://www.komiser.io/)
 
-“A cloud-agnostic resource mananger… integrates with multiple cloud providers … builds a cloud asset inventory, and helps you break down your cost at the resource level 💰”
-Community recognition: Not on CNCF Landscape, not a CNCF Project, not on FinOps Foundation’s Landscape. Has community following: 4.8k stars on GitHub.
+"A cloud-agnostic resource mananger... integrates with multiple cloud providers … builds a cloud asset inventory, and helps you break down your cost at the resource level 💰"
+Community recognition: Not on CNCF Landscape, not a CNCF Project, not on FinOps Foundation's Landscape.
+Has community following: 4.8k stars on GitHub.
 **License**: Elastic License (ELv2).
 **Level of Maintenance**: actively maintained.
 

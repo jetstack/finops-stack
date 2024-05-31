@@ -19,7 +19,7 @@ Policies should cover:
 
 #### [Kyverno](https://kyverno.io/)
 
-Nirmata provide a collection of ‘out-of-the-box’ FinOps and Cost-Optimisation policies (https://github.com/nirmata/finops-policies, https://nirmata.com/2023/03/22/kubernetes-finops-policies-with-kyverno/). May require some additional policiers - but this is a good starting point.
+[Nirmata](https://nirmata.com/) provide a collection of 'out-of-the-box' FinOps and Cost-Optimisation policies (https://github.com/nirmata/finops-policies, https://nirmata.com/2023/03/22/kubernetes-finops-policies-with-kyverno/). May require some additional policiers - but this is a good starting point.
 **Community recognition**: Not on FinOps landscape. CNCF Incubating Project.
 **License**: Apache
 **Level of Maintenance**: Actively maintained
@@ -46,7 +46,7 @@ Ideally tooling would:
 Identify potential for discounts (e.g. Spot Instances or Commitments vs on-demand pricing)
 Automate use of a cheaper machine type or machine discount model (i.e. Spot) where available
 
-Capability: [Rate Optimisation](https://www.finops.org/framework/capabilities/rate-optimization/)
+**Capability**: [Rate Optimisation](https://www.finops.org/framework/capabilities/rate-optimization/)
 
 ### Tooling considered
 
@@ -57,7 +57,7 @@ For any custom work, we should think about preferred direction:
 - Provide automation for rate optimisation as 'opt-in'. In reality, this would be spot instances only.
 
 ## Workload optimisation
-Capability: [Workload Optimisation](https://www.finops.org/framework/capabilities/workload-optimization/)
+**Capability**: [Workload Optimisation](https://www.finops.org/framework/capabilities/workload-optimization/)
 
 Consider:
 - Horizontal scaling

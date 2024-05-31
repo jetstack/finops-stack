@@ -27,13 +27,13 @@ This project is aimed at engineering teams that are aiming to automate FinOps be
 
 We believe that the key areas that the Engineering persona is trying to solve are:
 
-- Monitoring
+- **Monitoring**
   - Gathering metrics/cost data
   - Visualizing this data to teams and stakeholders
   - Multi-Cloud cost data
-- Alerting
+- **Alerting**
   - Anomaly management
-- Automation of best practices such as:
+- **Automation of best practices** such as:
   - Right-sizing/workload optimization
   - Providing sensible defaults
   - Forecasting (how much will x cost(if…))?
