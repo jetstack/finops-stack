@@ -56,7 +56,7 @@ We believe that the key areas that the Engineering persona is trying to solve ar
 **Automation and tooling**:
 
 - Admission control and policy enforcement: Kyverno (and custom tooling to add LimitRange per namespace) [[Cloud Policy & Governance](https://www.finops.org/framework/capabilities/cloud-policy-governance/), [Workload Optimization](https://www.finops.org/framework/capabilities/workload-optimization/)]
-- Rate optimization: Gap: Recommendations.  Custom required for spot. No recommendation tooling available (see [section](https://docs.google.com/document/d/1W1RRj6BsZ4LejqlXBW4-zGMz9-YfRRJ9jDW9Nc6QgzU/edit#heading=h.7z86k0chd71)).
+- Rate optimization: Gap: Recommendations.  Custom required for spot. No recommendation tooling available.
 - Workload optimization:
   - Cost avoidance:
 
