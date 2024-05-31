@@ -2,7 +2,7 @@
 title: Documentation
 ---
 
-## Streamline Finops Engineering
+## Streamline FinOps Engineering
 
 In today's dynamic financial landscape, organisations face the constant challenge of managing and optimising their financial operations effectively. The rapid evolution of cloud computing, coupled with the increasing complexity of financial data, necessitates a robust solution that not only integrates various financial tools but also provides a holistic view of spending and optimisation in real-time. This is where FinOps Stack comes in.
 
