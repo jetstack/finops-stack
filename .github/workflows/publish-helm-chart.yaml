@@ -72,7 +72,7 @@ jobs:
       - run: helm dep update
 
       # Ensure that the chart's default values produce manifests
-      - run: helm template test
+      - run: helm template test ./
 
       - name: checkout jetstack-charts
         uses: actions/checkout@v3
@@ -84,10 +84,10 @@ jobs:
 
       - name: Package helm chart
         run: |
-          helm package . -d jetstack-charts/charts/
+          helm package . -d ${{github.workspace}}/jetstack-charts/charts/
 
       - name: Creating PR
-        uses: peter-evans/create-pull-request@v6.0.5
+        uses: peter-evans/create-pull-request@v6.1.0
         with:
           token: ${{ secrets.JETSTACK_CHARTS_PAT }}
           title: "Release FinOps Stack ${{github.ref_name }}"
