@@ -61,7 +61,7 @@ dependencies:
   - name: finops-policies
     version: "*"
     condition: feature.finops-policies
-    repository: file://../../finops-policies/chart/
+    repository: https://charts.jetstack.io
 
   - name: vpa
     version: "*"
