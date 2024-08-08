@@ -34,6 +34,22 @@ jobs:
       - run: helm dep update
       - run: helm lint
 
+  github-release:
+    name: Create/Update GitHub Release
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create Release / Change Logs
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+
 
   build:
     runs-on: ubuntu-latest
