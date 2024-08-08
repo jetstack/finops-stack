@@ -19,7 +19,7 @@ Policies should cover:
 
 #### [Kyverno](https://kyverno.io/)
 
-[Nirmata](https://nirmata.com/) provide a collection of 'out-of-the-box' FinOps and Cost-Optimisation policies (https://github.com/nirmata/finops-policies, https://nirmata.com/2023/03/22/kubernetes-finops-policies-with-kyverno/). May require some additional policiers - but this is a good starting point.
+[Nirmata](https://nirmata.com/) provide a collection of 'out-of-the-box' FinOps and Cost-Optimisation policies ([https://github.com/nirmata/finops-policies], [https://nirmata.com/2023/03/22/kubernetes-finops-policies-with-kyverno/]). These May require some additional policies - but this is a good starting point.
 **Community recognition**: Not on FinOps landscape. CNCF Incubating Project.
 **License**: Apache
 **Level of Maintenance**: Actively maintained
