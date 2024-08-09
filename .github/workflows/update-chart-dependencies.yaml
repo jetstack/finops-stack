@@ -25,6 +25,8 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version-file: 'scripts/go.mod'
+          cache-dependency-path: "**/*.sum"
+
       - run: go mod download
         working-directory: scripts/
 
