@@ -27,31 +27,33 @@ dependencies:
   - name: vpatron
     version: "~0.0.0"
     condition: feature.vpatron
-    repository: https://charts.jetstack.io
-    # repository: file://../../vpatron/chart/
+    # repository: https://charts.jetstack.io
+    repository: file://../../finops-toolkit/vpatron/chart/
   - name: autospot
     version: "~0.0.0"
     condition: feature.autospot
-    repository: https://charts.jetstack.io
-    # repository: file://../../autospot/chart/
+    # repository: https://charts.jetstack.io
+    repository: file://../../finops-toolkit/autospot/chart/
   - name: limit-ranger
     version: "~0.0.0"
     condition: feature.limit-ranger
-    repository: https://charts.jetstack.io
-    # repository: file://../../limit-ranger/chart/
+    # repository: https://charts.jetstack.io
+    repository: file://../../finops-toolkit/limit-ranger/chart/
   - name: office-hours
-    version: "~0.0.0"
+    version: "~> 0.0.0"
     condition: feature.office-hours
-    repository: https://charts.jetstack.io
-    # repository: file://../../office-hours/chart/
+    # repository: https://charts.jetstack.io
+    repository: file://../../finops-toolkit/office-hours/chart/
 
   # OpenCost
-  # - name: prometheus-opencost-exporter
-  #   version: "*"
-  #   repository: https://prometheus-community.github.io/helm-charts
-  # - name: opencost
-  #   version: "*"
-  #   repository: https://opencost.github.io/opencost-helm-chart
+  - name: prometheus-opencost-exporter
+    version: "~> 0.1.1"
+    condition: feature.opencost-exporter
+    repository: https://prometheus-community.github.io/helm-charts
+  - name: opencost
+    version: "~> 1.41.0"
+    condition: feature.opencost
+    repository: https://opencost.github.io/opencost-helm-chart
 
   # Kyverno
   - name: kyverno
@@ -64,11 +66,11 @@ dependencies:
     repository: https://charts.jetstack.io
 
   - name: vpa
-    version: "*"
+    version: "4.5.0"
     condition: feature.vpa
     repository: https://charts.fairwinds.com/stable
 
   - name: grafana
-    version: "*"
+    version: "8.4.0"
     condition: feature.grafana
     repository: https://grafana.github.io/helm-charts

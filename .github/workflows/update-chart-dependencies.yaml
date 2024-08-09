@@ -1,0 +1,45 @@
+name: Check for Chart Dependency Updates
+
+on:
+  workflow_dispatch: # Enable manual generation
+  schedule:
+    - cron:  '0 0 * * 0'
+
+
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-chart
+  cancel-in-progress: true
+
+jobs:
+  check-for-updates:
+    permissions:
+      contents: write
+      pull-requests: write
+    name: Update Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: 'scripts/go.mod'
+
+      - name: Run Script
+        working-directory: scripts/
+        run: go run chart-dep-updater.go ../chart/Chart.yaml
+
+      - name: Creating PR
+        uses: peter-evans/create-pull-request@v6.1.0
+        with:
+          token: ${{ secrets.JETSTACK_CHARTS_PAT }}
+          title: "Update finops-stack Chart Dependencies"
+          commit-message: "Update finops-stack Chart Dependencies"
+          branch: finops-stack/${{ github.job_workflow_sha }}
+          path: chart
+          add-paths: chart/
+          delete-branch: true
+          signoff: true
+          base: main
+          draft: false

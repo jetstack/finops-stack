@@ -15,6 +15,10 @@ feature:
   vpa: false
   # -- Enable / Disable the installation of the Grafana
   grafana: true
+  # -- Enable / Disable the installation of OpenCost
+  opencost: true
+  # -- Enable / Disable the installation of OpenCost Exporter
+  opencost-exporter: true
 
 # @ignored
 vpa:
