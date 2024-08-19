@@ -1,12 +1,4 @@
 feature:
-  # -- Enable / Disable the AutoSpot controller
-  autospot: false
-  # -- Enable / Disable the office-hours controller
-  office-hours: true
-  # -- Enable / Disable the limit-ranger controller
-  limit-ranger: true
-  # -- Enable / Disable the vpatron controller
-  vpatron: true
   # -- Enable / Disable the installation of Kyverno
   kyverno: true
   # -- Enable / Disable the installation of Kyverno FinOps Policies
@@ -37,32 +29,10 @@ vpa:
         "requests": { "cpu": "100m", "memory": "500Mi" },
       }
     extraArgs:
-      prometheus-address: |
-        http://prometheus-system.prometheus-system.svc.cluster.local:80
+      prometheus-address: http://frontend.prometheus-system.svc.cluster.local:9090
       storage: prometheus
   admissionController:
     enabled: false
-
-# Value Overrides
-# @ignored
-# vpatron:
-#   image:
-#     tag: main
-
-# # @ignored
-# autospot:
-#   image:
-#     tag: main
-
-# # @ignored
-# office-hours:
-#   image:
-#     tag: main
-
-# # @ignored
-# limit-ranger:
-#   image:
-#     tag: main
 
 # @ignore
 kyverno:

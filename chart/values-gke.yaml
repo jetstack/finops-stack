@@ -1,0 +1,78 @@
+# Extension of values.yaml for GKE
+gke:
+  podmonitoring: true
+  prometheusFrontend:
+    enabled: true
+    serviceAccount:
+      annotations:
+        iam.gke.io/gcp-service-account: SERVICEACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com
+
+kyverno:
+  features:
+    backgroundScan:
+      skipResourceFilters: false # Important so that background Scan's Exclude Namespaces, etc
+  config:
+    resourceFiltersIncludeNamespaces:
+      - kube-system
+      - gmp-public
+      - gke-managed-system
+      - gke-gmp-system
+    webhooks:
+      - namespaceSelector:
+          matchExpressions:
+            - key: kubernetes.io/metadata.name
+              operator: NotIn
+              values:
+                - kube-system
+                - gmp-public
+                - gke-managed-system
+                - gke-gmp-system
+
+grafana:
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: GMP-Prometheus
+          type: prometheus
+          url: http://frontend.prometheus-system.svc.cluster.local:9090/
+          access: proxy
+          isDefault: true
+
+opencost:
+  cloudCost:
+    enabled: false
+  opencost:
+    cloudIntegrationSecret: cloud-costs
+    cloudCost:
+      enabled: true
+    prometheus:
+      internal:
+        serviceName: frontend
+        namespaceName: prometheus-system
+        port: 9090
+    exporter:
+      cloudProviderApiKey: "kejbgjkdsbghjdsbgjhdsb"
+
+prometheus-opencost-exporter:
+  service:
+    enabled: false
+  opencost:
+    prometheus:
+      internal:
+        serviceName: frontend
+        namespaceName: prometheus-system
+        port: 9090
+    exporter:
+      cloudProviderApiKey: "dksbngjsbvjdsbjvhnds"
+      # Persistent volume claim for storing the data. eg: csv file
+      persistence:
+        enabled: false
+        # -- Annotations for persistent volume
+        annotations: {}
+        # -- Access mode for persistent volume
+        accessMode: ""
+        # -- Storage class for persistent volume
+        storageClass: "standard-rwo"
+        # -- Size for persistent volume
+        size: "10g"
