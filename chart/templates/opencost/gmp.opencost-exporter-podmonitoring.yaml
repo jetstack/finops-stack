@@ -1,0 +1,16 @@
+{{ if and .Values.gke .Values.gke.podmonitoring (get .Values.feature "opencost-exporter") }}
+---
+apiVersion: monitoring.googleapis.com/v1
+kind: PodMonitoring
+metadata:
+  name: opencost-exporter
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-opencost-exporter
+  endpoints:
+  - port: http
+    interval: 60s
+  targetLabels:
+    metadata: []
+{{end}}

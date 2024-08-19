@@ -10,11 +10,13 @@ feature:
   # -- Enable / Disable the installation of Kyverno
   kyverno: true
   # -- Enable / Disable the installation of Kyverno FinOps Policies
-  finops-policies: false
+  finops-policies: true
   # -- Enable / Disable the installation of the VPA Controller
   vpa: false
   # -- Enable / Disable the installation of the Grafana
   grafana: true
+  # -- Enable / Disable the installation of Grafana FinOps Dashboards
+  finops-dashboards: true
   # -- Enable / Disable the installation of OpenCost
   opencost: true
   # -- Enable / Disable the installation of OpenCost Exporter
@@ -62,6 +64,20 @@ vpa:
 #   image:
 #     tag: main
 
+# @ignore
+kyverno:
+  reportsController:
+    rbac:
+      clusterRole:
+        extraResources:
+          - apiGroups: [events.k8s.io]
+            resources: ["events"]
+            verbs: [create]
+  grafana:
+    enabled: true
+    labels:
+      grafana_dashboard: "finops"
+
 # @ignored
 grafana:
   rbac:
@@ -89,3 +105,13 @@ grafana:
   sidecar:
     dashboards:
       enabled: true
+      labelValue: finops
+
+# @ignored
+prometheus-opencost-exporter:
+  podSecurityContext:
+    fsGroup: 2000
+  opencost:
+    prometheus:
+      amp: {}
+      thanos: {}

@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -10,7 +9,9 @@ import (
 	"github.com/Masterminds/semver/v3"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+
 	"gopkg.in/yaml.v3"
+
 	"helm.sh/helm/v3/pkg/chart/loader"
 	"helm.sh/helm/v3/pkg/cli"
 	"helm.sh/helm/v3/pkg/downloader"
@@ -48,7 +49,7 @@ func run(cmd *cobra.Command, args []string) {
 	chartPath := args[0]
 
 	// Load the Chart.yaml using yaml.Node to preserve structure
-	content, err := ioutil.ReadFile(chartPath)
+	content, err := os.ReadFile(chartPath)
 	if err != nil {
 		logger.Fatalf("Error reading Chart.yaml: %v", err)
 	}
