@@ -37,8 +37,9 @@ dependencies:
   - name: finops-policies
     version: "*"
     condition: feature.finops-policies
-    # repository: https://charts.jetstack.io
-    repository: file://../../finops-toolkit/finops-policies/chart/
+    repository: https://charts.jetstack.io
+    # Used during Development
+    # repository: file://../../finops-toolkit/finops-policies/chart/
   - name: vpa
     version: "4.5.0"
     condition: feature.vpa
@@ -51,5 +52,6 @@ dependencies:
   - name: finops-dashboards
     version: "*"
     condition: feature.finops-dashboards
-    # repository: https://charts.jetstack.io
-    repository: file://../../finops-toolkit/finops-dashboards/chart/
+    repository: https://charts.jetstack.io
+    # Used during Development
+    # repository: file://../../finops-toolkit/finops-dashboards/chart/
