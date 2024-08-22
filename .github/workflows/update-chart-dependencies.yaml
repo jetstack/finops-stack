@@ -16,6 +16,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+
     name: Update Dependencies
     runs-on: ubuntu-latest
     steps:
@@ -38,9 +39,9 @@ jobs:
         uses: peter-evans/create-pull-request@v6.1.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: "Update finops-stack Chart Dependencies"
-          commit-message: "Update finops-stack Chart Dependencies"
-          branch: finops-stack/${{ github.job_workflow_sha }}
+          title: "[CHART] Update finops-stack Chart Dependencies"
+          commit-message: "[CHART] Update finops-stack Chart Dependencies"
+          branch: finops-stack/${{ github.job }}
           path: .
           add-paths: chart/
           delete-branch: true
