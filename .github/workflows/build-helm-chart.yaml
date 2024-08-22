@@ -71,7 +71,7 @@ jobs:
       - run: helm dep update
 
       # Ensure that the chart's default values produce manifests
-      - run: helm template test
+      - run: helm template test .
 
       - if: ${{inputs.publish}}
         name: checkout jetstack-charts
