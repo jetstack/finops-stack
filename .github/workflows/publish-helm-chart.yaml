@@ -34,6 +34,9 @@ jobs:
       - run: helm lint
 
   github-release:
+    needs:
+      - build
+      - lint
     name: Create/Update GitHub Release
     permissions:
       contents: write
