@@ -75,7 +75,7 @@ jobs:
 
       - if: ${{inputs.publish}}
         name: checkout jetstack-charts
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.JETSTACK_CHARTS_PAT }}
           repository: jetstack/jetstack-charts
@@ -90,7 +90,7 @@ jobs:
 
       - name: Creating PR
         if: ${{inputs.publish}}
-        uses: peter-evans/create-pull-request@v6.0.5
+        uses: peter-evans/create-pull-request@v6.1.0
         with:
           token: ${{ secrets.JETSTACK_CHARTS_PAT }}
           title: "Release ${{inputs.chart-name}} ${{github.ref_name }}"
