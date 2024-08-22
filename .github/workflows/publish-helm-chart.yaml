@@ -2,7 +2,6 @@ name: Publish Chart
 
 on:
   workflow_dispatch: # Enable manual generation
-  pull_request:
   push:
     tags:
       - "v*"
@@ -86,7 +85,9 @@ jobs:
         run: |
           helm package . -d ${{github.workspace}}/jetstack-charts/charts/
 
-      - name: Creating PR
+        # Only create the PR when we're triggered by a tag
+      - if: contains(github.ref, 'refs/tags/')
+        name: Creating PR
         uses: peter-evans/create-pull-request@v6.1.0
         with:
           token: ${{ secrets.JETSTACK_CHARTS_PAT }}
