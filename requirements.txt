@@ -1,4 +1,3 @@
-minify==66.0.3
 mkdocs==1.6.0
 mkdocs-get-deps==0.2.0
 mkdocs-git-revision-date-localized-plugin==1.2.7
