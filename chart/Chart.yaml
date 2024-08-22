@@ -20,38 +20,38 @@ version: v0.0.5
 # It is recommended to use it with quotes.
 appVersion: "0.0.3"
 dependencies:
-  # OpenCost
-  - name: prometheus-opencost-exporter
-    version: "*"
-    condition: feature.opencost-exporter
-    repository: https://prometheus-community.github.io/helm-charts
-  - name: opencost
-    version: "~> 1.41.0"
-    condition: feature.opencost
-    repository: https://opencost.github.io/opencost-helm-chart
-  # Kyverno
-  - name: kyverno
-    version: "3.2.6"
-    condition: feature.kyverno
-    repository: https://kyverno.github.io/kyverno/
-  - name: finops-policies
-    version: "*"
-    condition: feature.finops-policies
-    repository: https://charts.jetstack.io
-    # Used during Development
-    # repository: file://../../finops-toolkit/finops-policies/chart/
-  - name: vpa
-    version: "4.5.0"
-    condition: feature.vpa
-    repository: https://charts.fairwinds.com/stable
-  # Grafana
-  - name: grafana
-    version: "8.4.4"
-    condition: feature.grafana
-    repository: https://grafana.github.io/helm-charts
-  - name: finops-dashboards
-    version: "*"
-    condition: feature.finops-dashboards
-    repository: https://charts.jetstack.io
-    # Used during Development
-    # repository: file://../../finops-toolkit/finops-dashboards/chart/
+    # OpenCost
+    - name: prometheus-opencost-exporter
+      version: "*"
+      condition: feature.opencost-exporter
+      repository: https://prometheus-community.github.io/helm-charts
+    - name: opencost
+      version: "1.42.0"
+      condition: feature.opencost
+      repository: https://opencost.github.io/opencost-helm-chart
+    # Kyverno
+    - name: kyverno
+      version: "3.2.6"
+      condition: feature.kyverno
+      repository: https://kyverno.github.io/kyverno/
+    - name: finops-policies
+      version: "*"
+      condition: feature.finops-policies
+      repository: https://charts.jetstack.io
+      # Used during Development
+      # repository: file://../../finops-toolkit/finops-policies/chart/
+    - name: vpa
+      version: "4.5.0"
+      condition: feature.vpa
+      repository: https://charts.fairwinds.com/stable
+    # Grafana
+    - name: grafana
+      version: "8.4.7"
+      condition: feature.grafana
+      repository: https://grafana.github.io/helm-charts
+    - name: finops-dashboards
+      version: "*"
+      condition: feature.finops-dashboards
+      repository: https://charts.jetstack.io
+      # Used during Development
+      # repository: file://../../finops-toolkit/finops-dashboards/chart/

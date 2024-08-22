@@ -1,36 +1,24 @@
 dependencies:
-- name: vpatron
-  repository: file://../../finops-toolkit/vpatron/chart/
-  version: v0.0.5
-- name: autospot
-  repository: file://../../finops-toolkit/autospot/chart/
-  version: v0.0.5
-- name: limit-ranger
-  repository: file://../../finops-toolkit/limit-ranger/chart/
-  version: v0.0.5
-- name: office-hours
-  repository: file://../../finops-toolkit/office-hours/chart/
-  version: v0.0.5
 - name: prometheus-opencost-exporter
   repository: https://prometheus-community.github.io/helm-charts
   version: 0.1.1
 - name: opencost
   repository: https://opencost.github.io/opencost-helm-chart
-  version: 1.41.0
+  version: 1.42.0
 - name: kyverno
   repository: https://kyverno.github.io/kyverno/
   version: 3.2.6
 - name: finops-policies
-  repository: file://../../finops-toolkit/finops-policies/chart/
+  repository: https://charts.jetstack.io
   version: v0.0.5
 - name: vpa
   repository: https://charts.fairwinds.com/stable
   version: 4.5.0
 - name: grafana
   repository: https://grafana.github.io/helm-charts
-  version: 8.4.4
+  version: 8.4.7
 - name: finops-dashboards
-  repository: file://../../finops-toolkit/finops-dashboards/chart/
-  version: 0.1.0
-digest: sha256:7fc5a075027ea2d9e13fc40e1d6f996a178a16dcc637b890824a7215113693cc
-generated: "2024-08-15T17:39:39.63753+01:00"
+  repository: https://charts.jetstack.io
+  version: v0.0.5
+digest: sha256:e0b055f5dc70b25d680ef814fa4833543f418ad68e288d85d107aec8fdd246b9
+generated: "2024-08-22T15:05:26.146903933Z"
