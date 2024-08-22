@@ -37,11 +37,11 @@ jobs:
       - name: Creating PR
         uses: peter-evans/create-pull-request@v6.1.0
         with:
-          token: ${{ secrets.JETSTACK_CHARTS_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           title: "Update finops-stack Chart Dependencies"
           commit-message: "Update finops-stack Chart Dependencies"
           branch: finops-stack/${{ github.job_workflow_sha }}
-          path: chart
+          path: .
           add-paths: chart/
           delete-branch: true
           signoff: true
