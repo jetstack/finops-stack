@@ -56,7 +56,7 @@ grafana:
     enabled: false
 
   adminUser: finops
-  adminPassword: s7@ck
+  adminPassword: s7@ck # pragma: allowlist secret
   enableServiceLinks: false
   plugins: []
   datasources:
