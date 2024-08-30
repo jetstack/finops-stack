@@ -1,0 +1,6 @@
+podSecurityContext:
+  fsGroup: 2000
+opencost:
+  prometheus:
+    amp: {}
+    thanos: {}

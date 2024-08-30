@@ -1,0 +1,26 @@
+  rbac:
+    namespaced: true
+  testFramework:
+    enabled: false
+
+  adminUser: finops
+  adminPassword: admin123 # pragma: allowlist secret
+  enableServiceLinks: false
+  plugins: []
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://kubecost-prometheus-server.kubecost.svc.cluster.local
+          access: proxy
+          isDefault: true
+
+  grafana.ini:
+    analytics:
+      check_for_updates: false
+  sidecar:
+    dashboards:
+      enabled: true
+      labelValue: finops

@@ -1,0 +1,12 @@
+cloudCost:
+  enabled: false
+opencost:
+  cloudCost:
+    enabled: false
+  prometheus:
+    internal:
+      serviceName: frontend
+      namespaceName: prometheus-system
+      port: 9090
+  exporter:
+    cloudProviderApiKey: "dummy_key"

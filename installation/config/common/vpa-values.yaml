@@ -1,0 +1,17 @@
+updater:
+  resources:
+    {
+      "limits": { "cpu": "100m", "memory": "500Mi" },
+      "requests": { "cpu": "100m", "memory": "500Mi" },
+    }
+recommender:
+  resources:
+    {
+      "limits": { "cpu": "100m", "memory": "500Mi" },
+      "requests": { "cpu": "100m", "memory": "500Mi" },
+    }
+  extraArgs:
+    prometheus-address: http://frontend.prometheus-system.svc.cluster.local:9090
+    storage: prometheus
+admissionController:
+  enabled: false

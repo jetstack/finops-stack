@@ -1,4 +1,4 @@
-{{ if and .Values.gke .Values.gke.podmonitoring .Values.feature.opencost }}
+{{ if and .Values.gke .Values.gke.podmonitoring }}
 ---
 apiVersion: monitoring.googleapis.com/v1
 kind: PodMonitoring

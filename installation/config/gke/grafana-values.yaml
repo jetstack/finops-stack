@@ -1,0 +1,13 @@
+serviceAccount:
+  annotations:
+    iam.gke.io/gcp-service-account: finops@jetstack-steve-judd.iam.gserviceaccount.com
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: GMP-Prometheus
+        type: prometheus
+        url: http://frontend.prometheus-system.svc.cluster.local:9090/
+        access: proxy
+        isDefault: true
+        editable: true

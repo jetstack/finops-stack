@@ -1,0 +1,11 @@
+reportsController:
+  rbac:
+    clusterRole:
+      extraResources:
+        - apiGroups: [events.k8s.io]
+          resources: ["events"]
+          verbs: [create]
+grafana:
+  enabled: true
+  labels:
+    grafana_dashboard: "finops"
