@@ -1,0 +1,206 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: envoy-proxy
+  name: gmp-proxy
+  namespace: finops-stack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gmp-proxy
+  template:
+    metadata:
+      labels:
+        app: gmp-proxy
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/jetstack-steve-judd/envoy-proxy/envoy:v1.31
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 8
+          httpGet:
+            path: /ready
+            port: http-healthz
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 15
+        name: envoy-proxy
+        ports:
+        - containerPort: 10000
+          name: http
+          protocol: TCP
+        - containerPort: 8001
+          name: http-healthz
+          protocol: TCP
+        env:
+        - name: ENVOY_UID
+          value: "0"
+        - name: ENVOY_GID
+          value: "0"
+
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - mountPath: /etc/envoy/envoy.yaml
+          name: config-volume
+          subPath: envoy.yaml 
+      enableServiceLinks: false
+      nodeSelector:
+        kubernetes.io/os: linux
+      serviceAccountName: grafana
+      volumes:
+      - name: config-volume
+        configMap:
+          name: gmp-proxy-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: gmp-proxy
+  name: gmp-proxy
+  namespace: finops-stack
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 10000
+  selector:
+    app: gmp-proxy
+  type: ClusterIP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gmp-proxy-config
+  namespace: finops-stack
+data:
+  envoy.yaml: |-
+    static_resources:
+      listeners:
+      - name: listener_0
+        address:
+          socket_address:
+            address: 0.0.0.0
+            port_value: 10000    
+        filter_chains:
+        - filters:
+          - name: envoy.filters.network.http_connection_manager
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+              stat_prefix: ingress_http
+              codec_type: AUTO
+              access_log:
+              - name: envoy.access_loggers.stdout
+                typed_config:
+                  "@type": type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog
+              http_filters:
+              - name: envoy.filters.http.lua
+                typed_config:
+                  "@type": type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua
+                  default_source_code:
+                    inline_string: |
+                      function envoy_on_request(request_handle)
+                        local request_options = {
+                          ["asynchronous"] = false,
+                          ["timeout_ms"] = 2000,
+                          -- Prevents the x-forwarded-for header being sent to Metadata server (necessary to prevent 403 response)
+                          ["send_xff"] = false
+                        }
+                        local headers, body = request_handle:httpCall(
+                        "metadata_server",
+                        {
+                          [":method"] = "GET",
+                          [":path"] = "/computeMetadata/v1/instance/service-accounts/default/token",
+                          [":authority"] = "metadata.google.internal",
+                          ["metadata-flavor"] = "Google"
+                        },
+                        "",
+                        request_options
+                        )
+
+                        -- Example of debug details (can be removed)
+                        request_handle:logInfo("Headers:")
+                        for i,v in pairs(headers) do
+                          request_handle:logInfo(i)
+                          request_handle:logInfo(v)
+                        end
+                        request_handle:logInfo("Body:")
+                        request_handle:logInfo(body)
+                        
+                        -- Use the cjson lib to retrieve access_token value from response
+                        -- and inject into client request as Authorization header
+                        local json=require("cjson")
+                        local response_body = json.decode(body)
+                        if response_body and response_body.access_token then
+                          request_handle:headers():add("Authorization", "Bearer " .. response_body.access_token)
+              
+                        end
+                      end              
+              - name: envoy.filters.http.router
+                typed_config:
+                  "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
+              route_config:
+                virtual_hosts:
+                - name: all_domains
+                  domains: ["*"]
+                  routes:
+                  - match:
+                      path_match_policy:
+                        name: envoy.path.match.uri_template.uri_template_matcher
+                        typed_config:
+                          "@type": type.googleapis.com/envoy.extensions.path.match.uri_template.v3.UriTemplateMatchConfig
+                          path_template: "/api/v1/**"
+                    route:
+                      cluster: monitoring
+                      auto_host_rewrite: true
+                      regex_rewrite:
+                        pattern:
+                          regex: "^/api/v1(.*)$"
+                        substitution: "/v1/projects/jetstack-steve-judd/location/global/prometheus/api/v1\\1"
+      clusters:
+      - name: metadata_server
+        type: LOGICAL_DNS
+        dns_lookup_family: V4_ONLY
+        connect_timeout: 2s
+        lb_policy: ROUND_ROBIN   
+        load_assignment:
+          cluster_name: metadata_server
+          endpoints:
+          - lb_endpoints:
+            - endpoint:     
+                address:
+                  socket_address:
+                    address:  "metadata.google.internal"
+                    port_value: 80
+
+      - name: monitoring
+        type: LOGICAL_DNS
+        dns_lookup_family: V4_ONLY
+        load_assignment:
+          cluster_name: monitoring
+          endpoints:
+          - lb_endpoints:
+            - endpoint:
+                address:
+                  socket_address:
+                    address: monitoring.googleapis.com
+                    port_value: 443
+        transport_socket:
+          name: envoy.transport_sockets.tls
+          typed_config:
+            "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
+            sni: monitoring.googleapis.com
+    admin:
+      address:
+        socket_address:
+          address: 0.0.0.0
+          port_value: 8001

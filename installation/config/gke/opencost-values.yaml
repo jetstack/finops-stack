@@ -4,9 +4,10 @@ opencost:
   cloudCost:
     enabled: false
   prometheus:
+    external:
+      enabled: true
+      url: http://gmp-proxy
     internal:
-      serviceName: frontend
-      namespaceName: prometheus-system
-      port: 9090
+      enabled: false
   exporter:
     cloudProviderApiKey: "dummy_key"

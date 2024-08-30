@@ -2,10 +2,11 @@ service:
   enabled: false
 opencost:
   prometheus:
+    external:
+      enabled: true
+      url: http://gmp-proxy
     internal:
-      serviceName: frontend
-      namespaceName: prometheus-system
-      port: 9090
+      enabled: false
   exporter:
     cloudProviderApiKey: "dummy_key"
     # Persistent volume claim for storing the data. eg: csv file

@@ -11,7 +11,7 @@ recommender:
       "requests": { "cpu": "100m", "memory": "500Mi" },
     }
   extraArgs:
-    prometheus-address: http://frontend.prometheus-system.svc.cluster.local:9090
+    prometheus-address: http://gmp-proxy/
     storage: prometheus
 admissionController:
   enabled: false

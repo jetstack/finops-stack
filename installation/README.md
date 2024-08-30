@@ -4,8 +4,9 @@ Installing Helm charts with lots of dependencies and CRDs is challenging; these 
 
 ## Pre-requisites
 
-A GKE cluster and kubectl access to it with cluster-admin access.
-[Helmfile](https://helmfile.readthedocs.io/en/latest/#installation) installed on your local machine
+- A GKE cluster and kubectl access to it with cluster-admin access.
+- [Helmfile](https://helmfile.readthedocs.io/en/latest/#installation) installed on your local machine
+- A GSA with roles/monitor.viewer, roles/iam.serviceAccountTokenCreator, workload identity for KSA: `[finops-stack/grafana]`
 
 ## Distribution support
 
@@ -34,3 +35,6 @@ To speed up subsequent runs:
 set -a; source .env; set +a; helmfile apply --interactive --skip-deps
 ```
 
+### Manually install Envoy Proxy
+
+Envoy Proxy is used as a proxy for accessing GMP (it injects a valid Bearer auth token into the request). Currently this needs to be installed by `kubectl` as there's not a Helm chart yet. The manifest is `./gmp-proxy.yaml`; you'll need to edit it to change the GCP Project - search for this line: `substitution: "/v1/projects/jetstack-steve-judd/location/global/prometheus/api/v1\\1"`
