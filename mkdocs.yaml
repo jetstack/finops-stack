@@ -17,10 +17,12 @@ extra:
 
 nav:
   - Home: index.md
-  - Documentation:
+  - Introduction:
       - intro.md
-      - Installation: install.md
       - Architecture: architecture.md
+      - Policies: policies.md
+  - Installation:
+      - install.md
   - credit.md
 
 extra_css:
