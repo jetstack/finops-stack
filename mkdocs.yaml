@@ -21,11 +21,6 @@ nav:
       - intro.md
       - Installation: install.md
       - Architecture: architecture.md
-      - Selection:
-          - selection/index.md
-          - Monitoring: selection/monitoring.md
-          - Alerting: selection/alerting.md
-          - Automation and Tooling: selection/automation-and-tooling.md
   - credit.md
 
 extra_css:
