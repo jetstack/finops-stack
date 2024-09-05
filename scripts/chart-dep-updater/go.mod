@@ -1,4 +1,4 @@
-module github.com/jetstack/finops-stack/scripts
+module github.com/jetstack/finops-stack/scripts/chart-dep-updater
 
 go 1.22.5
 
