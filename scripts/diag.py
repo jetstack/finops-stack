@@ -1,6 +1,10 @@
 #!/usr/bin/env python
-from diagrams import Cluster, Diagram, Edge
 import os
+from collections import defaultdict
+from urllib.parse import urlparse
+
+from diagrams import Cluster, Diagram, Edge
+
 from diagrams.onprem.monitoring import Prometheus, Grafana
 from diagrams.onprem.client import Users
 from diagrams.custom import Custom
@@ -8,6 +12,10 @@ from diagrams.custom import Custom
 from diagrams.k8s.compute import Deploy, StatefulSet, Cronjob
 from diagrams.k8s.others import CRD
 from diagrams.generic.place import Datacenter
+
+from diagrams.k8s.ecosystem import Helm
+
+import yaml
 
 with Diagram("Architecture",
              filename="../content/assets/architecture",
@@ -55,3 +63,26 @@ with Diagram("Architecture",
 
         for i in [aws, azure, gcp, onprem]:
             _ = opencost << Edge(label="Cost Data", style='dotted') << i
+
+
+with Diagram("Chart Structure",
+             filename="../content/assets/structure",
+             outformat="png",
+             show=False,
+             direction="TB"):
+
+    with open("../chart/Chart.yaml", 'r', encoding='UTF-8') as file:
+        chart_yaml = yaml.safe_load(file)
+
+    with Cluster('finops-stack'):
+        parent_chart = Helm("finops-stack")
+
+        grouped = defaultdict(list)
+        for dependency in chart_yaml['dependencies']:
+            parsed_url = urlparse(dependency['repository'])
+            grouped[parsed_url.netloc].append(dependency)
+
+        for repo, dept in grouped.items():
+            with Cluster(repo):
+                for dep in dept:
+                    parent_chart >> Helm(dep['name'])
