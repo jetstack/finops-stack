@@ -29,11 +29,11 @@ jobs:
           cache-dependency-path: "**/*.sum"
 
       - run: go mod download
-        working-directory: scripts/
+        working-directory: scripts/chart-dep-updater
 
       - name: Run Script
         working-directory: scripts/
-        run: go run chart-dep-updater.go ../chart/Chart.yaml
+        run: go run chart-dep-updater/main.go ../chart/Chart.yaml
 
       - name: Creating PR
         uses: peter-evans/create-pull-request@v6.1.0
