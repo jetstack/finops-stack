@@ -36,7 +36,7 @@ jobs:
         run: go run chart-dep-updater/main.go ../chart/Chart.yaml
 
       - name: Creating PR
-        uses: peter-evans/create-pull-request@v6.1.0
+        uses: peter-evans/create-pull-request@v7.0.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: "[CHART] Update finops-stack Chart Dependencies"
