@@ -91,7 +91,7 @@ jobs:
         # Only create the PR when we're triggered by a tag
       - if: contains(github.ref, 'refs/tags/')
         name: Creating PR
-        uses: peter-evans/create-pull-request@v6.1.0
+        uses: peter-evans/create-pull-request@v7.0.2
         with:
           token: ${{ secrets.JETSTACK_CHARTS_PAT }}
           title: "Release FinOps Stack ${{github.ref_name }}"
