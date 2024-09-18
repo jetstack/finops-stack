@@ -11,6 +11,11 @@ spec:
   endpoints:
   - port: http
     interval: 60s
+    metricRelabeling:
+    - sourceLabels: [exported_namespace]
+      targetLabel: "orig_namespace"
+    - sourceLabels: [exported_instance]
+      targetLabel: "orig_instance"
   targetLabels:
     metadata: []
 {{end}}

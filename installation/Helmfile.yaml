@@ -15,11 +15,12 @@ repositories:
 ---
 helmDefaults:
   wait: true
+  timeout: 1200
 ---
 environments:
   default:
     values:
-    - ./config/common/enabled.yaml
+    - ./config/common/enabled.yaml # edit this to specify which of the releases to install
 ---
 releases:
 - name: kyverno
@@ -39,7 +40,37 @@ releases:
   disableValidationOnInstall: true
   needs:
   - kyverno
-  
+
+- name: cert-manager
+  version: v1.15.3
+  chart: cert-manager/cert-manager
+  condition: cert-manager.enabled
+  namespace: cert-manager
+  values:
+  - crds:
+      enabled: true
+  - global:
+      leaderElection:
+        namespace: cert-manager
+      commonLabels:
+        cost-center-label: "xyz"
+  - serviceAccount:
+      annotations:
+        {{ requiredEnv "CERT_MANAGER_SA_ANNOTATION" }}
+
+- name: cert-manager-config
+  version: "0.1.0"
+  chart: "../charts/cert-manager-config"
+  condition: cert-manager.enabled
+  namespace: finops-stack
+  disableValidationOnInstall: true
+  needs:
+  - cert-manager/cert-manager
+  values:
+  - email: {{ requiredEnv "CERT_MANAGER_EMAIL" }}
+  - gcpProjectID: {{ requiredEnv "GCP_PROJECT" }}
+  - grafanaTLSCert:
+      hostname: {{ requiredEnv "GRAFANA_FQDN" }}
 
 - name: grafana
   version: "8.4.7"
@@ -55,13 +86,20 @@ releases:
       annotations:
         {{ requiredEnv "GRAFANA_SA_ANNOTATION" }}
 
-- name: finops-dashboards
-  version: "0.0.5"
-  chart: "cert-manager/finops-dashboards"
-  condition: finops-dashboards.enabled
-  namespace: finops-stack
+  # If you don't require ingress via an FQDN remove this ingress section
+  - ingress:
+      enabled: {{ requiredEnv "GRAFANA_INGRESS" }}
+      annotations:
+        kubernetes.io/ingress.global-static-ip-name: {{ requiredEnv "GRAFANA_PUBLIC_IP_NAME" }}
+      hosts:
+      - {{ requiredEnv "GRAFANA_FQDN" }}
+    # If you don't require https access to the Grafana dashboard remove this tls section
+      tls:
+      - secretName: {{ requiredEnv "GRAFANA_FQDN" }}-tls
+        hosts:
+        - {{ requiredEnv "GRAFANA_FQDN" }}
   needs:
-  - grafana
+  - cert-manager/cert-manager
 
 - name: vpa
   version: "4.5.0"
@@ -82,13 +120,23 @@ releases:
       exporter:
         cloudProviderApiKey: {{ requiredEnv "CSP_API_KEY" }}
 
+- name: gmp-proxy
+  version: "0.1.0"
+  chart: "../charts/gmp-proxy"
+  condition: gmp-proxy.enabled
+  namespace: finops-stack
+  needs: 
+  - grafana
+  values:
+  - gmpProjectId: {{ requiredEnv "GCP_PROJECT" }}
+
 - name: prometheus-opencost-exporter
-  version: "*"
+  version: "0.1.1"
   chart: "prometheus-opencost-exporter/prometheus-opencost-exporter"
   condition: opencost-exporter.enabled
   namespace: finops-stack
-  needs:
-  - opencost
+  needs: 
+  - gmp-proxy
   values:
   - "./config/common/prometheus-opencost-exporter-values.yaml"
   - "./config/{{ requiredEnv "HOST_ENV" }}/prometheus-opencost-exporter-values.yaml"
@@ -98,11 +146,10 @@ releases:
 
 - name: finops-stack-opencost-templates
   version: "0.1.0"
-  chart: "../chart/"
+  chart: "../charts/opencost-config"
   condition: opencost-templates.enabled
   namespace: finops-stack
   disableValidationOnInstall: true
-  needs:
-  - opencost
   values:
   - "./config/{{ requiredEnv "HOST_ENV" }}/opencost-templates-values.yaml"
+ 

@@ -7,6 +7,7 @@ Installing Helm charts with lots of dependencies and CRDs is challenging; these 
 - A GKE cluster and kubectl access to it with cluster-admin access.
 - [Helmfile](https://helmfile.readthedocs.io/en/latest/#installation) installed on your local machine
 - A GSA with roles/monitor.viewer, roles/iam.serviceAccountTokenCreator, workload identity for KSA: `[finops-stack/grafana]`
+- Unless you want to access the Grafana dashboard via `kubectl port-forward` you'll need a domain name
 
 ## Distribution support
 
@@ -29,12 +30,39 @@ For the first run:
 set -a; source .env; set +a; helmfile apply --interactive
 ```
 
+NOTE: it will take several minutes for all workloads to install and start running. Helmfile does display its progress in the terminal. All workloads get installed into the `finops-stack` namespace so you can also view progress using `kubectl`.
+
 To speed up subsequent runs:
 
 ```bash
 set -a; source .env; set +a; helmfile apply --interactive --skip-deps
 ```
 
-### Manually install Envoy Proxy
+## Configure ingress for Grafana
 
-Envoy Proxy is used as a proxy for accessing GMP (it injects a valid Bearer auth token into the request). Currently this needs to be installed by `kubectl` as there's not a Helm chart yet. The manifest is `./gmp-proxy.yaml`; you'll need to edit it to change the GCP Project - search for this line: `substitution: "/v1/projects/jetstack-steve-judd/location/global/prometheus/api/v1\\1"`
+### Pre-requisites
+
+Already have an FQDN setup and registered with a public IP, e.g. grafana.example.com
+
+### Grafana Helm values
+
+These are specified in `config/common/grafana-values.yaml`, `config/gke/grafana-values.yaml` and under the Grafana release in `helmfile.yaml`. Probably all the changes you will want to make can be done by changing the values in `helmfile.yaml`, e.g. the admin user and what type of ingress you require.
+
+If you also want TLS for your ingress then ensure that cert-manager.enabled is set to true and update the values in `.env` accordingly.
+
+## Useful commands
+
+To port forward to Grafana:
+
+```bash
+kubectl --namespace finops-stack port-forward service/grafana 3000:80
+```
+
+Access via http:localhost:3000
+
+To port forward to the metrics endpoint of the Opencost Prometheus exporter (to examine what metrics are being scraped):
+
+```bash
+kubectl --namespace finops-stack port-forward service/prometheus-opencost-exporter 9003:9003
+```
+

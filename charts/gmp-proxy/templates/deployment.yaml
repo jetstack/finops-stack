@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "gmp-proxy.fullname" . }}
+  namespace: {{ include "gmp-proxy.namespace" . }}
+  labels:
+    helm.sh/chart: {{ include "gmp-proxy.chart" . }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.selector: {{ include "gmp-proxy.fullname" . }}
+    {{- if .Values.labels }}
+{{ toYaml .Values.labels | indent 4 }}
+    {{- end }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.selector: {{ include "gmp-proxy.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app.selector: {{ include "gmp-proxy.fullname" . }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccountName }}
+      containers:
+        - name: envoy-proxy
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: ENVOY_UID
+            value: "0"
+          - name: ENVOY_GID
+            value: "0"
+          ports:
+          - containerPort: 10000
+            name: http
+            protocol: TCP
+          - containerPort: 8001
+            name: http-healthz
+            protocol: TCP
+          livenessProbe:
+            failureThreshold: 8
+            httpGet:
+              path: /ready
+              port: http-healthz
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 15
+
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+
+          volumeMounts:
+          - mountPath: /etc/envoy/envoy.yaml
+            name: config-volume
+            subPath: envoy.yaml 
+      enableServiceLinks: false
+      nodeSelector:
+        kubernetes.io/os: linux
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ include "gmp-proxy.fullname" . }}

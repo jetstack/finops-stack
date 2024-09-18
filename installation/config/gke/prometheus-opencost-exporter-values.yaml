@@ -1,5 +1,5 @@
 service:
-  enabled: false
+  enabled: true
 opencost:
   prometheus:
     external:
