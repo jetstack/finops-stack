@@ -1,6 +1,4 @@
----
-title: Documentation
----
+# Overview
 
 ## Streamline FinOps Engineering
 

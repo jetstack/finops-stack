@@ -24,5 +24,10 @@ opencost-exporter:
 opencost-templates:
   enabled: true
 
+# -- Enable / Disable the installation of GMP Proxy (required when using Google Managed Prometheus)
 gmp-proxy:
+  enabled: true
+
+# -- Enable / Disable the installation of Fairwinds' Goldilocks
+goldilocks:
   enabled: true

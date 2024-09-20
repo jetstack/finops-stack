@@ -11,6 +11,8 @@ repositories:
   url: https://charts.fairwinds.com/stable
 - name: cert-manager
   url: https://charts.jetstack.io
+- name: fairwinds-stable
+  url: https://charts.fairwinds.com/stable
 
 ---
 helmDefaults:
@@ -152,4 +154,14 @@ releases:
   disableValidationOnInstall: true
   values:
   - "./config/{{ requiredEnv "HOST_ENV" }}/opencost-templates-values.yaml"
+
+- name: goldilocks
+  version: "9.0.0"
+  chart: fairwinds-stable/goldilocks
+  condition: goldilocks.enabled
+  namespace: finops-stack
+  values:
+  - dashboard:
+      replicaCount: 1
+
  

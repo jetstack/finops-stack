@@ -58,7 +58,7 @@ To port forward to Grafana:
 kubectl --namespace finops-stack port-forward service/grafana 3000:80
 ```
 
-Access via http:localhost:3000
+Access via http://localhost:3000
 
 To port forward to the metrics endpoint of the Opencost Prometheus exporter (to examine what metrics are being scraped):
 
@@ -66,3 +66,10 @@ To port forward to the metrics endpoint of the Opencost Prometheus exporter (to 
 kubectl --namespace finops-stack port-forward service/prometheus-opencost-exporter 9003:9003
 ```
 
+To access the Goldilocks dashboard (assuming you've enabled it):
+
+```bash
+kubectl -n finops-stack port-forward svc/goldilocks-dashboard 8080:80
+```
+
+Then goto http://localhost:8080
