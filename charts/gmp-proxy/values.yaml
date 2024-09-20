@@ -5,3 +5,4 @@ image:
   tag: v1.31
   pullPolicy: IfNotPresent
 gmpProjectId: dummy-projectid
+resources: {}

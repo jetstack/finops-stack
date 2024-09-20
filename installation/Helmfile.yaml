@@ -49,8 +49,8 @@ releases:
   condition: cert-manager.enabled
   namespace: cert-manager
   values:
-  - crds:
-      enabled: true
+  - "./config/common/cert-manager-values.yaml"
+  - "./config/{{ requiredEnv "HOST_ENV" }}/cert-manager-values.yaml"
   - global:
       leaderElection:
         namespace: cert-manager
@@ -130,6 +130,7 @@ releases:
   needs: 
   - grafana
   values:
+  - "./config/common/gmp-proxy-values.yaml"
   - gmpProjectId: {{ requiredEnv "GCP_PROJECT" }}
 
 - name: prometheus-opencost-exporter
@@ -161,7 +162,6 @@ releases:
   condition: goldilocks.enabled
   namespace: finops-stack
   values:
-  - dashboard:
-      replicaCount: 1
+  - "./config/common/goldilocks-values.yaml"
 
  

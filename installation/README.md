@@ -50,6 +50,11 @@ These are specified in `config/common/grafana-values.yaml`, `config/gke/grafana-
 
 If you also want TLS for your ingress then ensure that cert-manager.enabled is set to true and update the values in `.env` accordingly.
 
+## Enable Goldilocks for namespaces
+
+For Goldilocks to analyse namespaces and add then to its dashboard you need to add this label to the namespace resource: `goldilocks.fairwinds.com/enabled=true`, e.g.  
+`kubectl label ns finops-stack goldilocks.fairwinds.com/enabled=true`
+
 ## Useful commands
 
 To port forward to Grafana:

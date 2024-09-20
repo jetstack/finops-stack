@@ -37,6 +37,7 @@ spec:
           - containerPort: 8001
             name: http-healthz
             protocol: TCP
+          resources: {{- toYaml .Values.resources | nindent 12 }}
           livenessProbe:
             failureThreshold: 8
             httpGet:

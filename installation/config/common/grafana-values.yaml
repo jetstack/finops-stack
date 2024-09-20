@@ -15,3 +15,10 @@
     dashboards:
       enabled: true
       labelValue: finops
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512M
+    requests:
+      cpu: 250m
+      memory: 350M

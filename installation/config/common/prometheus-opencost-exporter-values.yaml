@@ -1,2 +1,12 @@
 podSecurityContext:
   fsGroup: 2000
+
+opencost:
+  exporter:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 175M
+      limits:
+        cpu: 100m
+        memory: 256M
