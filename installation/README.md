@@ -1,12 +1,19 @@
 # Installation using Helmfile
 
-Installing Helm charts with lots of dependencies and CRDs is challenging; these instructions use Helmfile to mitigate issues with Helm.
+Installing Helm charts with lots of dependencies and CRDs is challenging; these instructions use Helmfile to mitigate issues with Helm. 
+
+This documentation focuses on installing the FinOps Stack in GKE standard/autopilot clusters.
 
 ## Pre-requisites
 
-- A GKE cluster and kubectl access to it with cluster-admin access.
+- A GKE standard or autopilot cluster with:
+   - kubectl access 
+   - cluster-admin permissions
+   - workload identity enabled 
 - [Helmfile](https://helmfile.readthedocs.io/en/latest/#installation) installed on your local machine
-- A GSA with roles/monitor.viewer, roles/iam.serviceAccountTokenCreator, workload identity for KSA: `[finops-stack/grafana]`
+- A Google Service Account with the following:
+    - roles/monitor.viewer and roles/iam.serviceAccountTokenCreator permissions
+    - workload identity configured for grafana kubernetes service account: `[finops-stack/grafana]`
 - Unless you want to access the Grafana dashboard via `kubectl port-forward` you'll need a domain name
 
 ## Distribution support
@@ -19,8 +26,8 @@ Installing Helm charts with lots of dependencies and CRDs is challenging; these 
 
 ### Configuration changes for your cluster environment
 
-1. To control which Finops Stack components to install edit the `./installation/config/common/enabled.yaml` file
-1. Copy `./env.tmpl` to `./.env` and replace the env var values accordingly (at the very least you'll need to change CSP_API_KEY and GRAFANA_SA_ANNOTATION values)
+1. To control which Finops Stack components to install, edit the `./installation/config/common/enabled.yaml` file
+1. Copy `./env.tmpl` to `./.env` and replace the env var values accordingly. As a minimum, you will need to change the GCP_PROJECT, CSP_API_KEY,  GRAFANA_SA_ANNOTATION values.
 
 ### Install everything using Helmfile
 
@@ -38,7 +45,7 @@ To speed up subsequent runs:
 set -a; source .env; set +a; helmfile apply --interactive --skip-deps
 ```
 
-## Configure ingress for Grafana
+## Optional: Configure ingress for Grafana
 
 ### Pre-requisites
 
@@ -48,7 +55,9 @@ Already have an FQDN setup and registered with a public IP, e.g. grafana.example
 
 These are specified in `config/common/grafana-values.yaml`, `config/gke/grafana-values.yaml` and under the Grafana release in `helmfile.yaml`. Probably all the changes you will want to make can be done by changing the values in `helmfile.yaml`, e.g. the admin user and what type of ingress you require.
 
-If you also want TLS for your ingress then ensure that cert-manager.enabled is set to true and update the values in `.env` accordingly.
+General guidance when configuring ingress:
+- Update the `.env` file with the FQDN and public IP for you domain.
+- If you wish to enable tls, then ensure that cert-manager.enabled is set to true and update the values in `.env` accordingly.
 
 ## Enable Goldilocks for namespaces
 
