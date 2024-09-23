@@ -4,7 +4,11 @@
 
 ## Overview
 
-FinOps Stack is a comprehensive, turnkey solution designed to revolutionise financial operations (FinOps) by integrating a suite of applications into a unified platform. Our goal is to empower organisations with the tools they need to manage, visualise, and optimise their cloud resources in a fast-paced and ever-changing environment. FinOps Stack leverages advanced technologies to deliver real-time insights, enabling teams to make informed decisions swiftly and efficiently.
+The FinOps Stack is the blueprint for a solution to automate FinOps best practices. It integrates a suite of open-source tools into a unified, easy-to-install platform.
+
+Our goal is to empower organisations with the tools they need to manage, visualise, and optimise their cloud resources in complex, ever-changing environments.
+
+The FinOps Stack is designed to work out-of-the-box seamlessly with GKE standard/autopilot clusters using Google Managed Prometheus, and can be customised for an organisation’s business requirements and/or Kubernetes distribution.
 
 This repository contains the core components of FinOps Stack, including:
 
@@ -13,9 +17,7 @@ This repository contains the core components of FinOps Stack, including:
 
 ## Installation and Usage
 
-For detailed installation instructions, please visit the [FinOps Stack documentation](https://finops-stack.jetstack.io).
-
-To deploy FinOps Stack using the Helm chart, navigate to the `chart` directory and follow the instructions provided there.
+For ease of use, the FinOps Stack is installed using a single Helmfile command. For detailed installation instructions, review the README under the `/installation` directory of this repository. 
 
 ## Contributing
 
@@ -25,7 +27,7 @@ When contributing, please follow these guidelines:
 
 1. **Raise an Issue**: Before starting work, check for existing issues. If none exist, raise a new one to discuss your idea.
 2. **Follow Templates**: Use the provided issue and pull request templates to ensure your contribution is well-documented and easy to review.
-3. **Suffix "Chart" for Chart Updates**: If your contribution involves changes to the Helm chart, please suffix the title of your issue or pull request with "Chart" to help us identify it quickly.
+3. **Suffix "Chart" for Chart Updates**: If your contribution involves changes to the Helm charts, please suffix the title of your issue or pull request with "Chart" to help us identify it quickly.
 
 ## License
 
