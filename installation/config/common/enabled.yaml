@@ -13,7 +13,7 @@ grafana:
   enabled: true
 # -- Enable / Disable the installation of cert-manager
 cert-manager:
-  enabled: true
+  enabled: false
 # -- Enable / Disable the installation of OpenCost
 opencost:
   enabled: false
