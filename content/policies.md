@@ -1,6 +1,6 @@
 # Policy Enforcement
 
-Configuring policy enforcement for FinOps in a cloud-native environment, particularly within Kubernetes, brings several key benefits that help organisations optimise their cloud spending while ensuring compliance and governance. FinOps focuses on creating financial accountability and managing the costs of cloud services, and integrating policy enforcement tools such as Kyverno (used within the finops-stack) into this process helps streamline cost management by enforcing consistent practices across teams and workloads. These policies can govern how resources are used, limiting wasteful spending, enforcing quotas, and ensuring that teams adhere to best practices like right-sizing workloads, using cost-effective storage, or cleaning up unused resources. By applying policies automatically, organisations can avoid uncontrolled cloud expenses and maintain financial discipline at scale.
+Configuring policy enforcement for FinOps in a cloud-native environment, particularly within Kubernetes, brings several key benefits that help organisations optimise their cloud spending while ensuring compliance and governance. FinOps focuses on creating financial accountability and managing the costs of cloud services. Integrating policy enforcement tools such as Kyverno (used within the FinOps Stack) into this process helps streamline cost management by enforcing consistent practices across teams and workloads. These policies can govern how resources are used, limiting wasteful spending, enforcing quotas, and ensuring that teams adhere to best practices like right-sizing workloads, using cost-effective storage, or cleaning up unused resources. By applying policies automatically, organisations can avoid uncontrolled cloud expenses and maintain financial discipline at scale.
 
 Incorporating policy enforcement in FinOps also provides transparency and accountability. FinOps teams often work closely with engineering teams to manage cloud usage, but the complexity of cloud-native environments makes it difficult to track which workloads are driving costs. Policies can enforce tagging standards, which make it easier to identify which teams, projects, or environments are responsible for resource consumption. This visibility allows for more accurate cost allocation and reporting, helping teams understand their spending patterns and optimise them. Policy enforcement can also ensure that resources deployed in production adhere to budget constraints, preventing accidental overspending by stopping deployments that exceed predefined cost thresholds or enforcing the use of reserved or spot instances where applicable.
 
@@ -9,7 +9,7 @@ Additionally, policy enforcement helps maintain a balance between agility and go
 
 ## Policy Examples
 
-Within the finops-stack, we've provided some policies we believe to be imported when considering implementing policy enforcement and FinOps practices, a few of these can be described below:
+Within the FinOps Stack, we've provided some policies we believe to be important when considering implementing policy enforcement and FinOps practices. Each policy and its function is described below.
 
 
 ### Block Large images
