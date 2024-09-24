@@ -13,7 +13,8 @@ The FinOps Stack is designed to work out-of-the-box seamlessly with GKE standard
 This repository contains the core components of FinOps Stack, including:
 
 - **Static Site**: The source code for the FinOps Stack website, providing documentation, guides, and resources for users.
-- **Helm Chart** (`chart` directory): The Helm chart that deploys the FinOps Stack to your Kubernetes cluster, ensuring a smooth and scalable deployment experience.
+- **Helm Charts** (`charts` directory): Helm charts included as part of the FinOps Stack. Charts are included in this directory so they can be used as blueprints and customised/extended where required.
+- **Installation**: Configuration and documentation for installing the FinOps Stack.
 
 ## Installation and Usage
 
