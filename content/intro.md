@@ -13,6 +13,7 @@ The FinOps Stack is designed to work out-of-the-box seamlessly with GKE standard
 ### Financial Dashboards
 
 The FinOps Stack provides Grafana dashboards that visualise a cluster's financial health and efficiency, including:
+
 - Cluster-level overviews
 - Drill-down panels with detailed metrics on cost, efficiency, utilisation and waste.
 
