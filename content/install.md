@@ -10,8 +10,7 @@ The following instructions are designed to work with GKE standard and GKE autopi
 
 ### Helmfile 
 
-1. Clone the FinOps Stack GitHub repository
-
+1. Clone the FinOps Stack GitHub repository: 
 ```shell
 git clone https://github.com/jetstack/finops-stack.git
 ```
