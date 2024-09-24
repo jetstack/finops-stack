@@ -21,6 +21,7 @@ nav:
       - Overview: intro.md
       - Architecture: architecture.md
       - Policies: policies.md
+      - Working with GKE Autopilot: distribution-gke-autopilot.md
   - Installation:
       - install.md
   - credit.md
