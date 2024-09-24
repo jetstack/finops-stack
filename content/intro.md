@@ -1,35 +1,31 @@
 # Overview
 
-## Streamline FinOps Engineering
+## The FinOps Stack
 
-In today's dynamic financial landscape, organisations face the constant challenge of managing and optimising their financial operations effectively. The rapid evolution of cloud computing, coupled with the increasing complexity of financial data, necessitates a robust solution that not only integrates various financial tools but also provides a holistic view of spending and optimisation in real-time. This is where FinOps Stack comes in.
+The FinOps Stack is the blueprint for a solution to automate FinOps best practices. It integrates a suite of open-source tools into a unified, easy-to-install platform.
 
-## Overview
+Our goal is to empower organisations with the tools they need to manage, visualise, and optimise their cloud resources in complex, ever-changing environments.
 
-FinOps Stack is a comprehensive, turnkey solution designed to revolutionise financial operations (FinOps) by integrating a suite of applications into a unified platform. Our goal is to empower organisations with the tools they need to manage, visualise, and optimise their cloud resources in a fast-paced and ever-changing environment. FinOps Stack leverages advanced technologies to deliver real-time insights, enabling teams to make informed decisions swiftly and efficiently.
+The FinOps Stack is designed to work out-of-the-box seamlessly with GKE standard/autopilot clusters using Google Managed Prometheus, and can be customised for an organisation’s business requirements and/or Kubernetes distribution.
 
 ## Key Features and Capabilities
 
-### Unified Financial Dashboard
+### Financial Dashboards
 
-FinOps Stack offers a range of, intuitive dashboard that aggregates workload data from various sources. This centralised view provides a comprehensive snapshot of the organisation's financial health, facilitating easy monitoring and management.
+The FinOps Stack provides Grafana dashboards that visualise a cluster's financial health and efficiency, including:
+- Cluster-level overviews
+- Drill-down panels with detailed metrics on cost, efficiency, utilisation and waste.
 
-### Real-time Spend Visualisation
+### FinOps Policies
 
-Understanding where and how resources are being utilised is crucial for effective financial management. FinOps Stack provides (near) real-time visualisation tools that display spending patterns, highlighting key areas of expenditure and potential cost-saving opportunities.
+Kyverno policies in the Stack can be used in either audit or enforce mode, and are based on FinOps best practices. Included policy examples cover large container images, cost-allocation/cost-center labels, restricting the scale of deployments and statefulsets, automating generation of HPA resources, disallowing service loadbalancers and preventing naked pods. Policies can be used for reporting or policy enforcement.
 
-### Scalability and Flexibility
+More detail on each policy can be found in the dedicated Policies page. 
 
-Designed to adapt to the evolving needs of organisations, FinOps Stack is highly scalable and flexible. Whether a small business or a large enterprise, the platform can be customised to fit specific requirements, growing alongside the organisation.
+### Cluster Efficiency
 
-### Seamless Integration
+Overall cluster efficiency, and especially right-sizing container requests and limits, is essential to running an optimised Kubernetes cluster. 
 
-FinOps Stack seamlessly integrates with existing financial tools and systems, eliminating the need for disruptive overhauls. This ensures a smooth transition and minimal downtime, allowing teams to quickly adopt and benefit from the platform.
+Goldilocks is included in the FinOps Stack to provide guidance on right-sized container requests and limits, and to complement the visualisations in the Stack's Grafana dashboard. 
 
-## Achieving Operational Excellence
-
-The core objective of FinOps Stack is to enhance operational efficiency and financial transparency. By providing a fast and effective means to visualise spending and optimise financial operations, the platform helps teams understand their financial landscape within minutes. This rapid insight enables proactive management, reducing the time and effort required to identify and address financial issues.
-
-## Empowering Teams with Knowledge
-
-FinOps Stack is designed with the end-user in mind. Its user-friendly interface and comprehensive documentation ensure that teams can quickly learn and leverage the platform's capabilities. Training modules and support services are available to assist users in navigating the system and maximising its potential.
+In addition, see the distribution-gke-autopilot page of this website to see a detailed breakdown of considerations for achieving greater cluster efficiency in GKE Autopilot.
