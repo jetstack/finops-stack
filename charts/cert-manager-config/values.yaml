@@ -1,0 +1,4 @@
+email: cert-manager@example.com
+gcpProjectID: myproject
+grafanaTLSCert:
+  hostname: grafana.example.com

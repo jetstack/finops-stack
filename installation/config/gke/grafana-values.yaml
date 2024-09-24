@@ -1,0 +1,20 @@
+serviceAccount:
+  annotations:
+    iam.gke.io/gcp-service-account: finops@my-project.iam.gserviceaccount.com
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: GMP-Prometheus
+        type: prometheus
+        uid: "PFB5ABA51A8A585D7"
+        url: http://gmp-proxy/
+        access: proxy
+        isDefault: true
+        editable: true
+ingress:
+  enabled: false
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "ip-name"
+  hosts:
+  - grafana.example.com

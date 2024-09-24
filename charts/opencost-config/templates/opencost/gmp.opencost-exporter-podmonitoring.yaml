@@ -1,4 +1,4 @@
-{{ if and .Values.gke .Values.gke.podmonitoring (get .Values.feature "opencost-exporter") }}
+{{ if and .Values.gke .Values.gke.podmonitoring }}
 ---
 apiVersion: monitoring.googleapis.com/v1
 kind: PodMonitoring
@@ -11,6 +11,11 @@ spec:
   endpoints:
   - port: http
     interval: 60s
+    metricRelabeling:
+    - sourceLabels: [exported_namespace]
+      targetLabel: "orig_namespace"
+    - sourceLabels: [exported_instance]
+      targetLabel: "orig_instance"
   targetLabels:
     metadata: []
 {{end}}

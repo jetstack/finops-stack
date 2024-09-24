@@ -18,7 +18,7 @@ extra:
 nav:
   - Home: index.md
   - Introduction:
-      - intro.md
+      - Overview: intro.md
       - Architecture: architecture.md
       - Policies: policies.md
   - Installation:

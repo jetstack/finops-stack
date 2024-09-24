@@ -4,27 +4,21 @@ title: Quickstart
 
 ## Installation
 
-This will include instructions on how to deploy the stack
-along with customization and configuration for different environments
+To simplify installation, the FinOps Stack is installed using a single Helmfile command. 
 
-### Helm
+The following instructions are designed to work with GKE standard and GKE autopilot. For full instructions, prerequisites and customisations, please see the installation README. 
 
-First we need to add our Chart Repository:
+### Helmfile 
 
+1. Clone the FinOps Stack GitHub repository: 
 ```shell
-helm repo add jetstack https://charts.jetstack.io
+git clone https://github.com/jetstack/finops-stack.git
 ```
 
-Next we can begin installed the FinOps Stack:
+2. In the `/installation` directory, copy `./env.tmpl` to `./.env`. Replace the env var values accordingly. As a minimum, you will need to change the GCP_PROJECT, CSP_API_KEY,  GRAFANA_SA_ANNOTATION values.
+
+3. Install using helmfile:
 
 ```shell
-helm install finops-stack -n finops-stack --create-namespace
+set -a; source .env; set +a; helmfile apply --interactive
 ```
-
-#### Customisation
-
-
-
-### Kustomize
-
-_TBC_

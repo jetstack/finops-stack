@@ -1,0 +1,775 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PFB5ABA51A8A585D7"
+      },
+      "description": "Based on the average total hourly node cost",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PFB5ABA51A8A585D7"
+          },
+          "editorMode": "code",
+          "expr": "sum(avg by (exported_instance) (node_total_hourly_cost)) * 24 * ${time_period_days}",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "timeFrom": "${time_period_days}d",
+      "title": "Estimated cluster cost",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PFB5ABA51A8A585D7"
+      },
+      "description": "Based on the average of CPU + Memory efficiency",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "series",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 8,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "asc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PFB5ABA51A8A585D7"
+          },
+          "editorMode": "code",
+          "expr": "((avg by (metadata_system_top_level_controller_name,metadata_system_top_level_controller_type)(avg_over_time(kubernetes_io:container_cpu_request_utilization{monitored_resource=\"k8s_container\",namespace_name=\"${namespace}\"}[60s]))*100) + (avg by (metadata_system_top_level_controller_name,metadata_system_top_level_controller_type)(avg_over_time(kubernetes_io:container_memory_request_utilization{monitored_resource=\"k8s_container\",namespace_name=\"${namespace}\"}[60s]))*100)) /2",
+          "instant": false,
+          "legendFormat": "{{metadata_system_top_level_controller_name}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "timeFrom": "${time_period_days}d",
+      "title": "Efficiency of selected namespace",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PFB5ABA51A8A585D7"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "gauge",
+                  "valueDisplayMode": "text"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 0,
+        "y": 8
+      },
+      "id": 4,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Cost"
+          }
+        ]
+      },
+      "pluginVersion": "11.1.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PFB5ABA51A8A585D7"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "topk(20,\n  sum(\n    sum(container_memory_allocation_bytes) \n    by (exported_namespace,exported_instance)\n    * on(exported_instance) group_left() (\n\t\t\tnode_ram_hourly_cost{} / 1024 / 1024 / 1024 * (24 * ${time_period_days})\n\t\t)\n\n    +\n\n    sum(container_cpu_allocation) \n    by (exported_namespace,exported_instance)\n    * on(exported_instance) group_left() (\n\t\t\tnode_cpu_hourly_cost{} * (24 * ${time_period_days})\n\t\t)\n  ) by (exported_namespace)\n)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "top_namespaces"
+        }
+      ],
+      "timeFrom": "${time_period_days}d",
+      "title": "Top 20 namespaces by estimated cost",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Value": "Cost",
+              "exported_namespace": "Namespace",
+              "namespace": "Namespace"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PFB5ABA51A8A585D7"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "gauge",
+                  "valueDisplayMode": "text"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 8,
+        "y": 8
+      },
+      "id": 5,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Cost"
+          }
+        ]
+      },
+      "pluginVersion": "11.1.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PFB5ABA51A8A585D7"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "topk(20,sum by (exported_namespace,owner_name)(((sum(container_memory_allocation_bytes) \n\tby (instance,exported_instance,exported_namespace,pod)\n\t+ on (instance,exported_namespace,pod) group_left(owner_name) kube_pod_owner{} * 0)\n\t* on(exported_instance) group_left() (\n\t\tnode_ram_hourly_cost{instance_type != \"\", job =\"opencost-exporter\"} / 1024 / 1024 / 1024 * (24 * ${time_period_days})\n  \t))\n\t+\n\t((sum(container_cpu_allocation) \n\tby (instance,exported_instance,exported_namespace,pod)\n\t+ on (instance,exported_namespace,pod) group_left(owner_name) kube_pod_owner{} * 0)\n\t* on(exported_instance) group_left() (\n\t\tnode_cpu_hourly_cost{instance_type != \"\", job =\"opencost-exporter\"} * (24 * ${time_period_days})\n  \t))\n\t))",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "top_namespaces"
+        }
+      ],
+      "timeFrom": "${time_period_days}d",
+      "title": "Top 20 workloads by estimated cost",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "Time": 0,
+              "Value": 3,
+              "exported_namespace": 2,
+              "owner_name": 1
+            },
+            "renameByName": {
+              "Value": "Cost",
+              "exported_namespace": "Namespace",
+              "namespace": "Namespace",
+              "owner_name": "Workload"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PFB5ABA51A8A585D7"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "gauge",
+                  "valueDisplayMode": "text"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 16,
+        "y": 8
+      },
+      "id": 6,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.1.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PFB5ABA51A8A585D7"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "topk(20,\n\t\tsum(\n\t\t  sum(container_memory_allocation_bytes) by (instance,exported_namespace,exported_instance, container)\n\t\t  * on(exported_instance) group_left() (\n\t\t\t\t  node_ram_hourly_cost{instance_type != \"\", job =\"opencost-exporter\", orig_namespace = \"\"} / 1024 / 1024 / 1024 * (24 * ${time_period_days})\n\t\t\t  )\n\t\t  +\n\t\t  sum(container_cpu_allocation) by (instance,exported_namespace,exported_instance, container)\n\t\t  * on(exported_instance) group_left() (\n\t\t\t\t  node_cpu_hourly_cost{instance_type != \"\", job =\"opencost-exporter\", orig_namespace = \"\"} * (24 * ${time_period_days})\n\t\t\t  )\n\t\t) by (exported_namespace, container)\n\t  )",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "top_namespaces"
+        }
+      ],
+      "timeFrom": "${time_period_days}d",
+      "title": "Top 20 containers by estimated cost",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "Time": 0,
+              "Value": 3,
+              "container": 1,
+              "exported_namespace": 2
+            },
+            "renameByName": {
+              "Value": "Cost",
+              "container": "Container",
+              "exported_namespace": "Namespace",
+              "namespace": "Namespace"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PFB5ABA51A8A585D7"
+      },
+      "description": "NOTE: only namespaces with < 80% efficiency shown",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 25
+              },
+              {
+                "color": "green",
+                "value": 65
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 12,
+        "x": 0,
+        "y": 15
+      },
+      "id": 7,
+      "options": {
+        "displayMode": "lcd",
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "color"
+      },
+      "pluginVersion": "11.1.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PFB5ABA51A8A585D7"
+          },
+          "editorMode": "code",
+          "expr": "(sum by (namespace_name)(avg_over_time(kubernetes_io:container_memory_used_bytes[5m])) / sum by (namespace_name)(avg_over_time(kubernetes_io:container_memory_request_bytes[5m])) * 100) < 79",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "timeFrom": "${time_period_days}d",
+      "title": "Memory efficiency (%) by Namespace",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PFB5ABA51A8A585D7"
+      },
+      "description": "NOTE: only namespaces with < 80% efficiency shown",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 25
+              },
+              {
+                "color": "green",
+                "value": 65
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 12,
+        "x": 12,
+        "y": 15
+      },
+      "id": 8,
+      "options": {
+        "displayMode": "lcd",
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "color"
+      },
+      "pluginVersion": "11.1.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PFB5ABA51A8A585D7"
+          },
+          "editorMode": "code",
+          "expr": "((sum by (namespace_name)(rate(kubernetes_io:container_cpu_core_usage_time{monitored_resource=\"k8s_container\"}[${__interval}])) / sum by (namespace_name)(avg_over_time(kubernetes_io:container_cpu_request_cores{monitored_resource=\"k8s_container\"}[${__interval}]))) * 100) < 80",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "timeFrom": "${time_period_days}d",
+      "title": "CPU efficiency (%) by Namespace",
+      "type": "bargauge"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "1",
+          "value": "1"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Time period (days)",
+        "multi": false,
+        "name": "time_period_days",
+        "options": [
+          {
+            "selected": true,
+            "text": "1",
+            "value": "1"
+          },
+          {
+            "selected": false,
+            "text": "7",
+            "value": "7"
+          },
+          {
+            "selected": false,
+            "text": "30",
+            "value": "30"
+          }
+        ],
+        "query": "1,7,30",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "allValue": "finops-stack",
+        "current": {
+          "selected": true,
+          "text": "finops-stack",
+          "value": "finops-stack"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PFB5ABA51A8A585D7"
+        },
+        "definition": "label_values(kube_namespace_labels,exported_namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Namespace",
+        "multi": false,
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(kube_namespace_labels,exported_namespace)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "hidden": true
+  },
+  "timezone": "browser",
+  "title": "FinOps Stack: Cluster cost & efficiency",
+  "uid": "adxky3sjvubcwcxxx",
+  "version": 9,
+  "weekStart": ""
+}
