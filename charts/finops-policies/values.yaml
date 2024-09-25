@@ -1,0 +1,31 @@
+defaultEnforcement: Audit
+
+# -- List of Filenames and their validationFailureAction - If not provided falls back to `defaultEnforcement`
+enforcement:
+  # -- Override defaultEnforcement for block-large-image Policy
+  block-large-image: Audit
+  # -- Override defaultEnforcement for disallow_service_type_loadBalancer Policy
+  disallow_service_type_loadBalancer: Audit
+  # -- Override defaultEnforcement for prevent_orphan_pods Policy
+  prevent_orphan_pods: Audit
+  # -- Override defaultEnforcement for restrict_scale Policy
+  restrict_scale: Audit
+
+  # -- Autoscaler policies
+  add_hpa: Audit
+  add_safe_to_evict: Audit
+  
+  
+
+# -- Details about where Kyverno is installed (if outside of finops-stack)
+kyverno:
+  # -- Namespace Kyverno is installed (defaults to the release Namespace)
+  namespace: ""
+  # -- Kyverno's Cleanup Service Config
+  cleanup:
+    # -- Service Account for Kyverno's Cleanup controller
+    serviceAccount: kyverno-cleanup-controller
+  # -- Kyverno's Background Enforcement Service Config
+  background:
+    # -- Service Account for Kyverno's Background controller
+    serviceAccount: kyverno-background-controller

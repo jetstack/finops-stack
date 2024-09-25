@@ -1,0 +1,5 @@
+apiVersion: v2
+name: finops-policies
+description: A Helm chart for deploying Kyverno policies related to FinOps
+type: application
+version: v0.1.0

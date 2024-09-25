@@ -1,0 +1,51 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: cost-center-label
+  annotations:
+    pod-policies.kyverno.io/autogen-controllers: none
+    policies.kyverno.io/title: Cost Center Label
+    policies.kyverno.io/minversion: 1.6.0
+    policies.kyverno.io/category: Compliance
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      Labels are key/value pairs that are attached to objects, such as pods.
+      Labels are intended to be used to specify identifying attributes of objects
+      that are meaningful and relevant to users, but do not directly imply semantics
+      to the core system. Labels can be used to organize and to select subsets of objects.
+      This policy validates that Pods should specify a label `cost-center-label`.
+  labels:
+    {{- include "finops-policies.labels" . | nindent 4 }}
+spec:
+  validationFailureAction: {{ include "finops-policies.enforcement" . }}
+  background: true
+  rules:
+  - name: validate-cost-center-label
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+    validate:
+      message: "All pods must have a 'cost-center-label' label specified."
+      pattern:
+        metadata:
+          labels:
+            cost-center-label: "?*"
+  - name: validate-podcontroller-namespace
+    match:
+      any:
+      - resources:
+          kinds:
+          - DaemonSet
+          - Deployment
+          - Job
+          - CronJob
+          - StatefulSet
+    validate:
+      message: "A 'cost-center-label' label must be specified."
+      pattern:
+        metadata:
+          labels:
+            cost-center-label: "?*"

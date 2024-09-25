@@ -1,0 +1,40 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: add-hpa
+  annotations:
+    policies.kyverno.io/title: Add Horizontal Pod Autoscaler
+    policies.kyverno.io/category: FinOps
+    policies.kyverno.io/subject: Add HPA
+    policies.kyverno.io/minversion: 1.8.0
+    policies.kyverno.io/description: >-
+      A Kyverno policy can generate HPA resources for each deployment that ensures that the application
+      can handle sudden spikes in traffic without downtime, and can also scale down when the demand decreases,
+      which saves resources and reduces costs
+  labels:
+    {{- include "finops-policies.labels" . | nindent 4 }}
+spec:
+  validationFailureAction: {{ include "finops-policies.enforcement" . }}
+  background: true
+  rules:
+  - name: default-hpa
+    match:
+      any:
+      - resources:
+          kinds:
+          - Deployment
+    generate:
+      apiVersion: autoscaling/v1
+      kind: HorizontalPodAutoscaler
+      name: "{{`{{request.object.metadata.name}}`}}"
+      namespace: "{{`{{request.object.metadata.namespace}}`}}"
+      data:
+        kind: HorizontalPodAutoscaler
+        spec:
+          scaleTargetRef:
+            apiVersion: apps/v1
+            kind: Deployment
+            name: "{{`{{request.object.metadata.name}}`}}"
+          minReplicas: 1
+          maxReplicas: 10
+        targetCPUUtilizationPercentage: 50
