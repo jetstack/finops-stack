@@ -1,0 +1,3 @@
+A Huge thanks to https://github.com/nirmata/finops-policies for publishing these policies.
+
+We're simply packaging these up in a helm chart

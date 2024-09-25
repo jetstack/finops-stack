@@ -1,4 +1,9 @@
+# -- Email addrss to use in the Lets Encrypt issuer CR
 email: cert-manager@example.com
+
+# -- GCP Project ID containing the Grafana host as a DNS record (used by the Issuer)
 gcpProjectID: myproject
+
 grafanaTLSCert:
+  # -- The Grafana host name
   hostname: grafana.example.com

@@ -35,8 +35,8 @@ releases:
   - "./config/{{ requiredEnv "HOST_ENV" }}/kyverno-values.yaml"  
 
 - name: finops-policies
-  version: "0.0.6"
-  chart: "cert-manager/finops-policies"
+  version: "0.1.0"
+  chart: "../charts/finops-policies"
   condition: finops-policies.enabled
   namespace: finops-stack
   disableValidationOnInstall: true

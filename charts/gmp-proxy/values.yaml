@@ -1,8 +1,17 @@
+# -- Number of replicas of the GMP Proxy pod
 replicaCount: 1
+
+# -- K8s SA that pod should use
 serviceAccountName: grafana
+
+# -- Image details
 image:
   repository: europe-west1-docker.pkg.dev/jetstack-steve-judd/envoy-proxy/envoy
   tag: v1.31
   pullPolicy: IfNotPresent
+
+# -- ID of the GCP Project containing the Managed Prometheus service that this proxy should connect to
 gmpProjectId: dummy-projectid
+
+# -- For defining Pod resource requests and limits
 resources: {}
