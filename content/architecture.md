@@ -10,7 +10,4 @@ FinOps Stack makes use of a wide range of software to provide a highly efficient
 - **gmp-proxy**: A proxy designed to simplify the integration between open-source Grafana and Google Managed Prometheus.
 - **[Cert-Manager](https://cert-manager.io/)**: An open source tool that provides certificate management for Kubernetes. In the FinOps Stack, cert-manager can be optionally installed to create a tls certificate if using ingress for Grafana. 
 
-## What does this look like:
 
-This Diagram describes what the FinOps Stack looks like within your cluster:
-![Architecture Diagram of FinOpsStack](assets/architecture.png)

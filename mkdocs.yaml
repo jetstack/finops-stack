@@ -17,13 +17,15 @@ extra:
 
 nav:
   - Home: index.md
-  - Introduction:
+  - About:
       - Overview: intro.md
       - Architecture: architecture.md
       - Policies: policies.md
-      - Working with GKE Autopilot: distribution-gke-autopilot.md
+      - Dashboards: dashboards.md
   - Installation:
       - install.md
+  - Distribution notes:
+      - distribution-gke-autopilot.md
   - credit.md
 
 extra_css:
@@ -79,6 +81,7 @@ plugins:
   - git-revision-date-localized:
       type: date
       enable_creation_date: true
+      fallback_to_build_date: true
   - minify:
       minify_html: true
   - include-markdown
