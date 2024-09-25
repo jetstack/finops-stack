@@ -1,3 +1,6 @@
+# -- GKE specific settings
 gke:
+
+# -- If you are using GCP's Managed Prometheus service set this to true
   podmonitoring: false
 
