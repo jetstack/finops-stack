@@ -6,7 +6,7 @@ title: Quickstart
 
 To simplify installation, the FinOps Stack is installed using a single Helmfile command. 
 
-The following instructions are designed to work with GKE standard and GKE autopilot. For full instructions, prerequisites and customisations, please see the installation README. 
+The following instructions are designed to work with GKE standard and GKE autopilot. For full instructions, prerequisites and customisations, please see the [installation README](https://github.com/jetstack/finops-stack/blob/main/installation/README.md). 
 
 ### Helmfile 
 

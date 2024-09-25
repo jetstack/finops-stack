@@ -9,10 +9,9 @@ Additionally, policy enforcement helps maintain a balance between agility and go
 
 ## Policy Examples
 
-Within the FinOps Stack, we've provided some policies we believe to be important when considering implementing policy enforcement and FinOps practices. Each policy and its function is described below.
+Within the FinOps Stack, we've provided some policies we believe to be important when considering implementing policy enforcement and FinOps practices. Each policy and its function is described below. By default all policies are set to 'Audit' rather than 'Enforce'; this can be changed for individual policies or all of them via Helm values. All policies can be found in `./charts/finops-policies/templates`.
 
-
-### Block Large images
+### Block Large images ([`block-large-image.yaml`](https://github.com/jetstack/finops-stack/blob/main/charts/finops-policies/templates/block-large-image.yaml))
 
 Containers with excessively large image sizes can significantly impact the performance and efficiency of Kubernetes clusters. Large images take longer to pull from the registry, increasing deployment times and potentially causing delays in application start-up, which can disrupt critical operations. Additionally, these images consume more disk space on the nodes, which can lead to node resource exhaustion and reduce the available capacity for other workloads. Large images may also create unnecessary network traffic, particularly when pulled across multiple nodes, impacting overall cluster performance and increasing operational costs.
 
@@ -20,7 +19,7 @@ This policy is designed to mitigate such risks by enforcing a strict limit on co
 
 By enforcing this policy, organisations can maintain a standardised, efficient, and secure environment, ensuring that all workloads deployed are optimised for performance and resource usage. This policy also promotes best practices in image optimisation, encouraging development teams to reduce bloat, use multi-stage builds, and implement efficient base images to keep container sizes within acceptable limits.
 
-### Validate Cost Center Label
+### Validate Cost Center Label ([`validate-cost-center-label.yaml`](https://github.com/jetstack/finops-stack/blob/main/charts/finops-policies/templates/validate-cost-center-label.yaml))
 
 Labels in Kubernetes are key/value pairs used to organise and manage workloads by adding metadata that is meaningful to users but does not affect the core functionality of the system. They play a crucial role in filtering, grouping, and selecting objects, such as pods, for operational tasks like deployments, scaling, monitoring, and cost tracking. Proper labelling ensures clarity and consistency across teams, enabling effective resource allocation, automation, and management within the cluster.
 
@@ -28,7 +27,7 @@ This policy enforces the requirement that all Pods deployed within the cluster m
 
 By enforcing this policy, organisations ensure that all workloads are tagged with relevant financial metadata, which can be used to generate detailed cost reports and dashboards, monitor spending per team or project, and prevent unaccounted-for resource usage. It also promotes accountability and transparency across teams, ensuring that cloud resources are aligned with business objectives. Failure to apply this label may result in unidentified costs, making it difficult to optimise budgets or identify areas where cost-saving measures are needed.
 
-### Restrict Scale of Deployments/Statefulsets, etc
+### Restrict Scale of Deployments/Statefulsets, etc ([`restrict_scale.yaml`](https://github.com/jetstack/finops-stack/blob/main/charts/finops-policies/templates/restrict_scale.yaml))
 
 Pod controllers, such as Deployments, manage replicas of pods to ensure high availability, scalability, and resiliency of applications running in Kubernetes. These controllers use the /scale subresource to dynamically adjust the number of pod replicas, either manually or through auto-scaling mechanisms. While scaling is critical to meeting demand, uncontrolled or excessive scaling can exhaust cluster resources, destabilise workloads, or lead to unexpected costs.
 
@@ -38,7 +37,7 @@ The policy also accounts for operational governance by controlling the scale act
 
 By enforcing this policy, organisations can optimise cluster stability, prevent resource exhaustion, and maintain cost-effective scaling practices, ensuring that both system performance and financial controls are upheld.
 
-### Disallow Service LoadBalancers
+### Disallow Service LoadBalancers ([`disallow_service_type_loadBalancer.yaml`](https://github.com/jetstack/finops-stack/blob/main/charts/finops-policies/templates/disallow_service_type_loadBalancer.yaml))
 
 In Kubernetes, the LoadBalancer service type provides a mechanism to expose services externally to the internet by automatically provisioning an external load balancer. While this is a convenient method to provide access to applications, improper or excessive use of LoadBalancer services can lead to unintended consequences, such as increased cloud costs, security risks, and resource consumption.
 
@@ -46,7 +45,7 @@ This policy enforces governance around the creation and usage of services with t
 
 By applying this policy, organisations can maintain tighter control over network traffic management, ensuring that only approved applications can utilise external load balancers, and promoting the use of alternative, cost-effective service types such as ClusterIP or NodePort where external access is not required. The policy also supports FinOps principles by enforcing the responsible use of cloud resources and minimising operational costs related to networking services.
 
-### Add HPA to Deployments/StatefulSets
+### Add HPA to Deployments/StatefulSets ([`autoscaler_policies\*.yaml`](https://github.com/jetstack/finops-stack/tree/main/charts/finops-policies/templates/autoscaler_policies))
 
 Horizontal Pod Autoscalers (HPA) are critical components in Kubernetes for maintaining application performance and resource efficiency by automatically adjusting the number of pod replicas in response to varying workloads. A Kyverno policy can automate the generation of HPA resources for each deployment, ensuring that applications are able to handle sudden spikes in traffic without downtime, while also scaling down during periods of low demand to conserve resources.
 
@@ -56,7 +55,7 @@ Additionally, the policy supports cost-efficiency by ensuring that resources are
 
 This Kyverno policy plays a crucial role in balancing application reliability, performance, and cost management, especially in dynamic cloud environments where traffic and resource requirements can fluctuate unpredictably.
 
-### Prevent Naked Pods
+### Prevent Naked Pods ([`prevent_orphan_pods.yaml`](https://github.com/jetstack/finops-stack/blob/main/charts/finops-policies/templates/prevent_orphan_pods.yaml))
 
 Pods that are not managed by higher-level workload controllers, such as Deployments, StatefulSets, or DaemonSets, lack the self-healing and scaling capabilities that Kubernetes offers. These “naked” Pods, when deployed directly, are unsuitable for production environments as they do not benefit from automated recovery if a node fails or a pod crashes, nor can they scale up or down based on demand.
 
@@ -65,3 +64,17 @@ This policy enforces a restriction that prevents the creation of such standalone
 In addition to improving operational stability, the policy promotes best practices in Kubernetes resource management by encouraging developers and operators to use controllers like Deployments for managing pod lifecycles. Workload controllers provide declarative updates, rolling deployments, and the ability to maintain desired state configurations, which are essential features for maintaining robust and scalable applications in modern cloud-native environments.
 
 By enforcing this policy, organisations can prevent the accidental deployment of fragile, unmanaged Pods, reducing operational risks and ensuring a more resilient production environment.
+
+### Various quota policies ([`quota_management_policies\*.yaml`](https://github.com/jetstack/finops-stack/tree/main/charts/finops-policies/templates/quota_management_policies))
+
+#### Add namespace quota
+
+To better control the number of resources that can be created in a given Namespace and provide default resource consumption limits for Pods, ResourceQuota and LimitRange resources are recommended. This policy will generate ResourceQuota and LimitRange resources when a new Namespace is created.
+
+#### Namespace Inventory Check
+
+In cases such as multi-tenancy where new Namespaces must be fully provisioned before they can be used, it may not be easy to declare and understand if/when the Namespace is ready. Having a policy which defines all the resources which are required for each Namespace can assist in determining compliance. This policy, expected to be run in background mode only, performs a Namespace inventory check to ensure that all Namespaces have a ResourceQuota and NetworkPolicy. Additional rules may be written to extend the check for your needs. By default, background scans occur every one hour which may be changed with an additional container flag. Please see the installation documentation for details.
+
+#### Require Limits and Requests
+
+As application workloads share cluster resources, it is important to limit resources requested and consumed by each Pod. It is recommended to require resource requests and limits per Pod, especially for memory and CPU. If a Namespace level request or limit is specified, defaults will automatically be applied to each Pod based on the LimitRange configuration. This policy validates that all containers have something specified for memory and CPU requests and memory limits.
