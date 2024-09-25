@@ -32,12 +32,12 @@ GMP provides endpoints for almost all of Prometheus' API (as documented [here](h
 
 The GMP Proxy Pod uses GCP Workload Identity so you'll need to associate the SA used by the Pod with a GCP SA that has the following roles:
 
-- monitor.viewer
+- monitoring.viewer
 - iam.serviceAccountTokenCreator
 
 ##### Envoy Proxy image
 
-The standard Envoy Docker image can't be used as is because an additional Lua library is required, so we have provided a custom image which includes this library. If you prefer to use your own image, this is `Dockerfile` we used:
+The standard Envoy Docker image can't be used as is because an additional Lua library is required, so we have provided a custom image which includes this library. If you prefer to use your own image, this is the `Dockerfile` we used:
 
 ```
 # Image from https://hub.docker.com/r/envoyproxy/envoy

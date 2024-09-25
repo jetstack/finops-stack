@@ -27,6 +27,6 @@ More detail on each policy can be found in the dedicated Policies page.
 
 Overall cluster efficiency, and especially right-sizing container requests and limits, is essential to running an optimised Kubernetes cluster. 
 
-Goldilocks is included in the FinOps Stack to provide guidance on right-sized container requests and limits, and to complement the visualisations in the Stack's Grafana dashboard. 
+Goldilocks is included in the FinOps Stack to provide guidance on right-sized container requests and limits, and to complement the visualisations in the Stack's Grafana dashboard.
 
-In addition, see the distribution-gke-autopilot page of this website to see a detailed breakdown of considerations for achieving greater cluster efficiency in GKE Autopilot.
+In addition, see the [GKE Autopilot page](./distribution-gke-autopilot.md) to see a detailed breakdown of considerations for achieving greater cluster efficiency in GKE Autopilot.
