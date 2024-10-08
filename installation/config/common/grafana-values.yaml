@@ -1,24 +1,24 @@
-  rbac:
-    namespaced: true
-  testFramework:
-    enabled: false
+rbac:
+  namespaced: true
+testFramework:
+  enabled: false
 
-  adminUser: finops
-  adminPassword: admin123 # pragma: allowlist secret
-  enableServiceLinks: false
-  plugins: []
+adminUser: finops
+adminPassword: admin123 # pragma: allowlist secret
+enableServiceLinks: false
+plugins: []
 
-  grafana.ini:
-    analytics:
-      check_for_updates: false
-  sidecar:
-    dashboards:
-      enabled: true
-      labelValue: finops
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512M
-    requests:
-      cpu: 250m
-      memory: 350M
+grafana.ini:
+  analytics:
+    check_for_updates: false
+sidecar:
+  dashboards:
+    enabled: true
+    labelValue: finops
+resources:
+  limits:
+    cpu: 500m
+    memory: 512M
+  requests:
+    cpu: 250m
+    memory: 350M

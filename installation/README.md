@@ -26,8 +26,8 @@ This documentation focuses on installing the FinOps Stack in GKE standard/autopi
 
 ### Configuration changes for your cluster environment
 
-1. To control which Finops Stack components to install, edit the `./installation/config/common/enabled.yaml` file
-1. Copy `./env.tmpl` to `./.env` and replace the env var values accordingly. As a minimum, you will need to change the GCP_PROJECT, CSP_API_KEY,  GRAFANA_SA_ANNOTATION values.
+1. To control which Finops Stack components to install, edit the [enabled.yaml](./installation/config/common/enabled.yaml) file
+1. Copy `./env.tmpl` to `./.env` and replace the env var values accordingly. As a minimum, you will need to change the `GCP_PROJECT`, `CSP_API_KEY`,  `GRAFANA_SA_ANNOTATION` values. <!-- TODO: Automate env variable values replacement --->
 
 ### Install everything using Helmfile
 
