@@ -18,7 +18,7 @@ This repository contains the core components of FinOps Stack, including:
 
 ## Installation and Usage
 
-For ease of use, the FinOps Stack is installed using a single Helmfile command. For detailed installation instructions, review the README under the `/installation` directory of this repository. 
+For ease of use, the FinOps Stack is installed using a single Helmfile command. For detailed installation instructions, review the README under the [installation](/installation) directory of this repository.
 
 ## Contributing
 

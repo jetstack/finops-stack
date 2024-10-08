@@ -13,7 +13,7 @@ This documentation focuses on installing the FinOps Stack in GKE standard/autopi
 - [Helmfile](https://helmfile.readthedocs.io/en/latest/#installation) installed on your local machine
 - A Google Service Account with the following:
     - roles/monitor.viewer and roles/iam.serviceAccountTokenCreator permissions
-    - workload identity configured for grafana kubernetes service account: `[finops-stack/grafana]`
+    - workload identity configured for grafana kubernetes service account: `[finops-stack/grafana]`. Have a look at this [blog post](https://venafi.com/blog/gke-workload-identity-federation-for-kubernetes-principals/) to configure workload identity.
 - Unless you want to access the Grafana dashboard via `kubectl port-forward` you'll need a domain name
 
 ## Distribution support
@@ -26,8 +26,8 @@ This documentation focuses on installing the FinOps Stack in GKE standard/autopi
 
 ### Configuration changes for your cluster environment
 
-1. To control which Finops Stack components to install, edit the `./installation/config/common/enabled.yaml` file
-1. Copy `./env.tmpl` to `./.env` and replace the env var values accordingly. As a minimum, you will need to change the GCP_PROJECT, CSP_API_KEY,  GRAFANA_SA_ANNOTATION values.
+1. To control which Finops Stack components to install, edit the [enabled.yaml](./installation/config/common/enabled.yaml) file
+1. Copy `./env.tmpl` to `./.env` and replace the env var values accordingly. As a minimum, you will need to change the `GCP_PROJECT`, `CSP_API_KEY`,  `GRAFANA_SA_ANNOTATION` values. <!-- TODO: Automate env variable values replacement --->
 
 ### Install everything using Helmfile
 

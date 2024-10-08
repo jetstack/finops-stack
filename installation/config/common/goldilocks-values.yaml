@@ -14,4 +14,4 @@ dashboard:
       memory: 103M
     requests:
       cpu: 50m
-      memory: 52M  
+      memory: 52M
