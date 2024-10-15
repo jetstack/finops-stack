@@ -1,8 +1,6 @@
 repositories:
 - name: kyverno
   url: https://kyverno.github.io/kyverno/
-- name: opencost
-  url: https://opencost.github.io/opencost-helm-chart
 - name: prometheus-opencost-exporter
   url: https://prometheus-community.github.io/helm-charts
 - name: grafana
@@ -22,7 +20,7 @@ helmDefaults:
 environments:
   default:
     values:
-    - ./config/common/enabled.yaml # edit this to specify which of the releases to install
+    - "./config/common/enabled.yaml" # edit this to specify which of the releases to install
 ---
 releases:
 - name: kyverno
@@ -110,17 +108,6 @@ releases:
   namespace: finops-stack
   values:
   - "./config/common/vpa-values.yaml"
-
-- name: opencost
-  version: "1.42.0"
-  chart: "opencost/opencost"
-  condition: opencost.enabled
-  namespace: finops-stack
-  values:
-  - "./config/{{ requiredEnv "HOST_ENV" }}/opencost-values.yaml"
-  - opencost:
-      exporter:
-        cloudProviderApiKey: {{ requiredEnv "CSP_API_KEY" }}
 
 - name: gmp-proxy
   version: "0.1.0"

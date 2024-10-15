@@ -2,17 +2,25 @@
 
 Installing Helm charts with lots of dependencies and CRDs is challenging; these instructions use Helmfile to mitigate issues with Helm. 
 
-This documentation provides instructions for installing the FinOps Stack in Kind cluster for a quick setup. For deployment on a GKE cluster, refer to the [gke docs](./gke.md).
+This documentation focuses on installing the FinOps Stack in GKE standard/autopilot clusters.
 
 ## Pre-requisites
 
-- A [Kind](https://kind.sigs.k8s.io/) cluster
-- kubectl
+- A GKE standard or autopilot cluster with:
+   - kubectl access 
+   - cluster-admin permissions
+   - workload identity enabled 
 - [Helmfile](https://helmfile.readthedocs.io/en/latest/#installation) installed on your local machine
+- A Google Service Account with the following:
+    - roles/monitor.viewer and roles/iam.serviceAccountTokenCreator permissions
+    - workload identity configured for grafana kubernetes service account: `[finops-stack/grafana]`. Have a look at this [blog post](https://venafi.com/blog/gke-workload-identity-federation-for-kubernetes-principals/) to configure workload identity.
+- Unless you want to access the Grafana dashboard via `kubectl port-forward` you'll need a domain name
 
 ## Distribution support
 
-- Custom pricing to be applied by updating OpenCost Helm values file
+### GKE Autopilot
+
+- Enable cost allocation
 
 ## Installation
 
@@ -26,7 +34,7 @@ This documentation provides instructions for installing the FinOps Stack in Kind
 For the first run:
 
 ```bash
-set -a; source .env; set +a; helmfile apply --file helmfile_kind.yaml --interactive
+set -a; source .env; set +a; helmfile apply --interactive
 ```
 
 NOTE: it will take several minutes for all workloads to install and start running. Helmfile does display its progress in the terminal. All workloads get installed into the `finops-stack` namespace so you can also view progress using `kubectl`.

@@ -2,6 +2,8 @@ podSecurityContext:
   fsGroup: 2000
 
 opencost:
+  customPricing:
+    enabled: true
   exporter:
     resources:
       requests:
