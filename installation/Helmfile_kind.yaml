@@ -48,9 +48,6 @@ releases:
   - "./config/common/grafana-values.yaml"
   - adminUser: {{ requiredEnv "GRAFANA_ADMIN_USER" }}
   - adminPassword: {{ requiredEnv "GRAFANA_ADMIN_PW" }}
-  # - serviceAccount:
-  #     annotations:
-  #       {{ requiredEnv "GRAFANA_SA_ANNOTATION" }}
 
 - name: vpa
   version: "4.5.0"
@@ -75,8 +72,8 @@ releases:
   condition: opencost-templates.enabled
   namespace: finops-stack
   disableValidationOnInstall: true
-  # values:
-  # - "./config/{{ requiredEnv "HOST_ENV" }}/opencost-templates-values.yaml"
+  values:
+  - "./config/{{ requiredEnv "HOST_ENV" }}/opencost-templates-values.yaml"
 
 - name: goldilocks
   version: "9.0.0"
@@ -85,5 +82,3 @@ releases:
   namespace: finops-stack
   values:
   - "./config/common/goldilocks-values.yaml"
-
- 

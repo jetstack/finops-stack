@@ -1,4 +1,6 @@
 opencost:
+  configFileName: default
+  provider: kind
   customPricing:
     # -- Enables custom pricing for on-premise setup.
     enabled: true
