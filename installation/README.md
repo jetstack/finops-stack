@@ -6,27 +6,35 @@ This documentation provides instructions for installing the FinOps Stack in Kind
 
 ## Pre-requisites
 
-- A [Kind](https://kind.sigs.k8s.io/) cluster
-- kubectl
+- [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation) installed on your local machine
+- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [Helmfile](https://helmfile.readthedocs.io/en/latest/#installation) installed on your local machine
 
-## Distribution support
-
-- Custom pricing to be applied by updating OpenCost Helm values file
-
 ## Installation
+
+## Create a kind cluster
+
+```bash
+make cluster
+```
 
 ### Configuration changes for your cluster environment
 
 1. To control which Finops Stack components to install, edit the [enabled.yaml](./installation/config/common/enabled.yaml) file
-1. Copy `./env.tmpl` to `./.env` and replace the env var values accordingly. As a minimum, you will need to change the `GCP_PROJECT`, `CSP_API_KEY`,  `GRAFANA_SA_ANNOTATION` values. <!-- TODO: Automate env variable values replacement -->
+1. Copy env.tmpl file and replace the env var values accordingly (`GRAFANA_FQDN` for example).
+
+```sh
+cp ./env.tmpl ./.env
+```
 
 ### Install everything using Helmfile
 
 For the first run:
 
 ```bash
-set -a; source .env; set +a; helmfile apply --file helmfile_kind.yaml --interactive
+make finops-stack
+# FinOps stack is install using Helmfile:
+# set -a; source .env; set +a; helmfile apply --file helmfile_kind.yaml --interactive
 ```
 
 NOTE: it will take several minutes for all workloads to install and start running. Helmfile does display its progress in the terminal. All workloads get installed into the `finops-stack` namespace so you can also view progress using `kubectl`.
@@ -53,8 +61,11 @@ General guidance when configuring ingress:
 
 ## Enable Goldilocks for namespaces
 
-For Goldilocks to analyse namespaces and add then to its dashboard you need to add this label to the namespace resource: `goldilocks.fairwinds.com/enabled=true`, e.g.  
-`kubectl label ns finops-stack goldilocks.fairwinds.com/enabled=true`
+For Goldilocks to analyse namespaces and add then to its dashboard you need to add this label to the namespace resource: `goldilocks.fairwinds.com/enabled=true`, e.g:
+
+```bash
+kubectl label ns finops-stack goldilocks.fairwinds.com/enabled=true
+```
 
 ## Useful commands
 
