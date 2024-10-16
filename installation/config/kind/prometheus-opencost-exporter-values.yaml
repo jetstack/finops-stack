@@ -1,4 +1,10 @@
 opencost:
+  prometheus:
+    external:
+      enabled: true
+      url: http://prometheus-server
+    internal:
+      enabled: false
   customPricing:
     # -- Enables custom pricing for on-premise setup.
     enabled: true

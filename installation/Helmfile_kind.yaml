@@ -46,6 +46,7 @@ releases:
   namespace: finops-stack
   values:
   - "./config/common/grafana-values.yaml"
+  - "./config/{{ requiredEnv "HOST_ENV" }}/grafana-values.yaml"
   - adminUser: {{ requiredEnv "GRAFANA_ADMIN_USER" }}
   - adminPassword: {{ requiredEnv "GRAFANA_ADMIN_PW" }}
 
