@@ -3,6 +3,8 @@ repositories:
   url: https://kyverno.github.io/kyverno/
 - name: prometheus-opencost-exporter
   url: https://prometheus-community.github.io/helm-charts
+- name: prometheus
+  url: https://prometheus-community.github.io/helm-charts
 - name: grafana
   url: https://grafana.github.io/helm-charts
 - name: vpa
@@ -57,6 +59,14 @@ releases:
   namespace: finops-stack
   values:
   - "./config/common/vpa-values.yaml"
+
+- name: prometheus
+  version: "25.27.0"
+  chart: "prometheus/prometheus"
+  condition: prometheus.enabled
+  namespace: finops-stack
+  values:
+  - "./config/{{ requiredEnv "HOST_ENV" }}/prometheus-values.yaml"
 
 - name: prometheus-opencost-exporter
   version: "0.1.1"
