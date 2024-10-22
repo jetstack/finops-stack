@@ -1,0 +1,95 @@
+repositories:
+- name: kyverno
+  url: https://kyverno.github.io/kyverno/
+- name: prometheus-opencost-exporter
+  url: https://prometheus-community.github.io/helm-charts
+- name: prometheus
+  url: https://prometheus-community.github.io/helm-charts
+- name: grafana
+  url: https://grafana.github.io/helm-charts
+- name: vpa
+  url: https://charts.fairwinds.com/stable
+- name: fairwinds-stable
+  url: https://charts.fairwinds.com/stable
+
+---
+helmDefaults:
+  wait: true
+  timeout: 1200
+---
+environments:
+  default:
+    values:
+    - ./config/{{ requiredEnv "HOST_ENV" }}/enabled.yaml
+---
+releases:
+- name: kyverno
+  version: "3.2.6"
+  chart: kyverno/kyverno
+  condition: kyverno.enabled
+  namespace: finops-stack
+  values:
+  - "./config/common/kyverno-values.yaml"
+  # - "./config/{{ requiredEnv "HOST_ENV" }}/kyverno-values.yaml"  
+
+- name: finops-policies
+  version: "0.1.0"
+  chart: "../charts/finops-policies"
+  condition: finops-policies.enabled
+  namespace: finops-stack
+  disableValidationOnInstall: true
+  needs:
+  - kyverno
+
+- name: grafana
+  version: "8.4.7"
+  chart: grafana/grafana
+  condition: grafana.enabled
+  namespace: finops-stack
+  values:
+  - "./config/common/grafana-values.yaml"
+  - "./config/{{ requiredEnv "HOST_ENV" }}/grafana-values.yaml"
+  - adminUser: {{ requiredEnv "GRAFANA_ADMIN_USER" }}
+  - adminPassword: {{ requiredEnv "GRAFANA_ADMIN_PW" }}
+
+- name: vpa
+  version: "4.5.0"
+  chart: "vpa/vpa"
+  condition: vpa.enabled
+  namespace: finops-stack
+  values:
+  - "./config/common/vpa-values.yaml"
+
+- name: prometheus
+  version: "25.27.0"
+  chart: "prometheus/prometheus"
+  condition: prometheus.enabled
+  namespace: finops-stack
+  values:
+  - "./config/{{ requiredEnv "HOST_ENV" }}/prometheus-values.yaml"
+
+- name: prometheus-opencost-exporter
+  version: "0.1.1"
+  chart: "prometheus-opencost-exporter/prometheus-opencost-exporter"
+  condition: opencost-exporter.enabled
+  namespace: finops-stack
+  values:
+  - "./config/common/prometheus-opencost-exporter-values.yaml"
+  - "./config/{{ requiredEnv "HOST_ENV" }}/prometheus-opencost-exporter-values.yaml"
+
+- name: finops-stack-opencost-templates
+  version: "0.1.0"
+  chart: "../charts/opencost-config"
+  condition: opencost-templates.enabled
+  namespace: finops-stack
+  disableValidationOnInstall: true
+  values:
+  - "./config/{{ requiredEnv "HOST_ENV" }}/opencost-templates-values.yaml"
+
+- name: goldilocks
+  version: "9.0.0"
+  chart: fairwinds-stable/goldilocks
+  condition: goldilocks.enabled
+  namespace: finops-stack
+  values:
+  - "./config/common/goldilocks-values.yaml"

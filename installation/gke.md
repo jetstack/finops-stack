@@ -2,39 +2,39 @@
 
 Installing Helm charts with lots of dependencies and CRDs is challenging; these instructions use Helmfile to mitigate issues with Helm. 
 
-This documentation provides instructions for installing the FinOps Stack in Kind cluster for a quick setup. For deployment on a GKE cluster, refer to the [gke docs](./gke.md).
+This documentation focuses on installing the FinOps Stack in GKE standard/autopilot clusters.
 
 ## Pre-requisites
 
-- [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation) installed on your local machine
-- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+- A GKE standard or autopilot cluster with:
+   - kubectl access 
+   - cluster-admin permissions
+   - workload identity enabled 
 - [Helmfile](https://helmfile.readthedocs.io/en/latest/#installation) installed on your local machine
+- A Google Service Account with the following:
+    - roles/monitor.viewer and roles/iam.serviceAccountTokenCreator permissions
+    - workload identity configured for grafana kubernetes service account: `[finops-stack/grafana]`. Have a look at this [blog post](https://venafi.com/blog/gke-workload-identity-federation-for-kubernetes-principals/) to configure workload identity.
+- Unless you want to access the Grafana dashboard via `kubectl port-forward` you'll need a domain name
+
+## Distribution support
+
+### GKE Autopilot
+
+- Enable cost allocation
 
 ## Installation
-
-## Create a kind cluster
-
-```bash
-make cluster
-```
 
 ### Configuration changes for your cluster environment
 
 1. To control which Finops Stack components to install, edit the [enabled.yaml](./installation/config/common/enabled.yaml) file
-1. Copy env.tmpl file and replace the env var values accordingly (`GRAFANA_FQDN` for example).
-
-```sh
-cp ./env.tmpl ./.env
-```
+1. Copy `./env.tmpl` to `./.env` and replace the env var values accordingly. As a minimum, you will need to change the `GCP_PROJECT`, `CSP_API_KEY`,  `GRAFANA_SA_ANNOTATION` values. <!-- TODO: Automate env variable values replacement -->
 
 ### Install everything using Helmfile
 
 For the first run:
 
 ```bash
-make finops-stack
-# FinOps stack is install using Helmfile:
-# set -a; source .env; set +a; helmfile apply --file helmfile_kind.yaml --interactive
+set -a; source .env; set +a; helmfile apply --interactive
 ```
 
 NOTE: it will take several minutes for all workloads to install and start running. Helmfile does display its progress in the terminal. All workloads get installed into the `finops-stack` namespace so you can also view progress using `kubectl`.
@@ -61,11 +61,8 @@ General guidance when configuring ingress:
 
 ## Enable Goldilocks for namespaces
 
-For Goldilocks to analyse namespaces and add then to its dashboard you need to add this label to the namespace resource: `goldilocks.fairwinds.com/enabled=true`, e.g:
-
-```bash
-kubectl label ns finops-stack goldilocks.fairwinds.com/enabled=true
-```
+For Goldilocks to analyse namespaces and add then to its dashboard you need to add this label to the namespace resource: `goldilocks.fairwinds.com/enabled=true`, e.g.  
+`kubectl label ns finops-stack goldilocks.fairwinds.com/enabled=true`
 
 ## Useful commands
 
