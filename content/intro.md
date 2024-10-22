@@ -6,7 +6,7 @@ The FinOps Stack is the blueprint for a solution to automate FinOps best practic
 
 Our goal is to empower organisations with the tools they need to manage, visualise, and optimise their cloud resources in complex, ever-changing environments.
 
-The FinOps Stack is designed to work out-of-the-box seamlessly with GKE standard/autopilot clusters using Google Managed Prometheus, and can be customised for an organisation’s business requirements and/or Kubernetes distribution.
+The FinOps Stack is designed to work out-of-the-box seamlessly with GKE standard/autopilot clusters using Google Managed Prometheus, and can be customised for an organisation’s business requirements and/or Kubernetes distribution. Additionally, there is an option to deploy the FinOps Stack on a Kind cluster for a quick setup, allowing you to explore its functionality.
 
 ## Key Features and Capabilities
 
