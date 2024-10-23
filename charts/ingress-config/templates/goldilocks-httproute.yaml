@@ -1,0 +1,43 @@
+{{ if .Values.goldilocks.route.enabled }}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: goldilocks-route
+  labels:
+    {{- include "ingress-config.labels" $ | nindent 4}}  
+spec:
+  parentRefs:
+  - name: {{ .Values.goldilocks.route.gatewayName }}
+    namespace: {{ .Values.goldilocks.route.gatewayNamespace }}
+  hostnames:
+  - {{ .Values.goldilocks.route.hostname }}
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: goldilocks-dashboard
+      port: 80
+---
+apiVersion: networking.gke.io/v1
+kind: HealthCheckPolicy
+metadata:
+  name: goldilocks-route
+spec:
+  default:
+    checkIntervalSec: 5
+    healthyThreshold: 1
+    unhealthyThreshold: 2
+    logConfig:
+      enabled: true
+    config:
+      type: HTTP
+      httpHealthCheck:
+        portName: http
+        requestPath: /health
+  targetRef:
+    group: ""
+    kind: Service
+    name: goldilocks-dashboard
+{{ end }}

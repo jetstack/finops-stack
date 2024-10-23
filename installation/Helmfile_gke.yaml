@@ -21,6 +21,36 @@ environments:
   default:
     values:
     - "./config/common/enabled.yaml" # edit this to specify which of the releases to install
+    - grafana:
+        ingress:
+          enabled: true
+          tls: true
+        route:
+          enabled: false
+          gatewayName: ""
+          gatewayNamespace: ""
+    - goldilocks:
+        route:
+          enabled: false
+          gatewayName: ""
+          gatewayNamespace: ""          
+  gke-gateway:
+    values:
+    - "./config/common/enabled.yaml" # edit this to specify which of the releases to install
+    - grafana:
+        ingress:
+          enabled: false
+          tls: false
+        route:
+          enabled: true
+          gatewayName: {{ requiredEnv "GATEWAY_NAME" }}
+          gatewayNamespace: {{ requiredEnv "GATEWAY_NAMESPACE" }}
+    - goldilocks:
+        route:
+          enabled: true
+          gatewayName: {{ requiredEnv "GATEWAY_NAME" }}
+          gatewayNamespace: {{ requiredEnv "GATEWAY_NAMESPACE" }}
+          
 ---
 releases:
 - name: kyverno
@@ -61,7 +91,7 @@ releases:
 - name: cert-manager-config
   version: "0.1.0"
   chart: "../charts/cert-manager-config"
-  condition: cert-manager.enabled
+  condition: cert-manager-config.enabled
   namespace: finops-stack
   disableValidationOnInstall: true
   needs:
@@ -69,8 +99,6 @@ releases:
   values:
   - email: {{ requiredEnv "CERT_MANAGER_EMAIL" }}
   - gcpProjectID: {{ requiredEnv "GCP_PROJECT" }}
-  - grafanaTLSCert:
-      hostname: {{ requiredEnv "GRAFANA_FQDN" }}
 
 - name: grafana
   version: "8.4.7"
@@ -85,21 +113,48 @@ releases:
   - serviceAccount:
       annotations:
         {{ requiredEnv "GRAFANA_SA_ANNOTATION" }}
-
-  # If you don't require ingress via an FQDN remove this ingress section
+  {{ if .StateValues.grafana.ingress.enabled }}
   - ingress:
-      enabled: {{ requiredEnv "GRAFANA_INGRESS" }}
+      enabled: true
       annotations:
         kubernetes.io/ingress.global-static-ip-name: {{ requiredEnv "GRAFANA_PUBLIC_IP_NAME" }}
       hosts:
       - {{ requiredEnv "GRAFANA_FQDN" }}
-    # If you don't require https access to the Grafana dashboard remove this tls section
+      {{ if .StateValues.grafana.ingress.tls }}
       tls:
       - secretName: {{ requiredEnv "GRAFANA_FQDN" }}-tls
         hosts:
         - {{ requiredEnv "GRAFANA_FQDN" }}
+      {{ end }}
+  {{ end }}
   needs:
   - cert-manager/cert-manager
+
+- name: ingress-config
+  version: "v0.1.0"
+  chart: "../charts/ingress-config"
+  condition: ingress-config.enabled
+  namespace: finops-stack
+  disableValidationOnInstall: true
+  needs:
+  - cert-manager/cert-manager
+  values:
+  - grafanaTLSCert:
+      create: {{ and .StateValues.grafana.ingress.enabled .StateValues.grafana.ingress.tls }}
+      hostname: {{ requiredEnv "GRAFANA_FQDN" }}
+  - grafana:
+      route:
+        enabled: {{ .StateValues.grafana.route.enabled }}
+        gatewayName: {{ .StateValues.grafana.route.gatewayName }}
+        gatewayNamespace: {{ .StateValues.grafana.route.gatewayNamespace }}
+        hostname: {{ requiredEnv "GRAFANA_FQDN" }}
+  - goldilocks:
+      route:
+        enabled: {{ .StateValues.goldilocks.route.enabled }}
+        gatewayName: {{ .StateValues.goldilocks.route.gatewayName }}
+        gatewayNamespace: {{ .StateValues.goldilocks.route.gatewayNamespace }}
+        hostname: {{ requiredEnv "GOLDILOCKS_FQDN" }}        
+
 
 - name: vpa
   version: "4.5.0"

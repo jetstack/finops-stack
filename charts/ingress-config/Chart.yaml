@@ -1,0 +1,5 @@
+apiVersion: v2
+name: ingress-config
+description: FinOps Stack related ingress config
+type: application
+version: v0.1.0

@@ -1,0 +1,9 @@
+grafanaTLSCert:
+  create: false
+  hostname: grafana.example.com
+grafana:
+  route:
+    enabled: false
+goldilocks:
+  route:
+    enabled: false

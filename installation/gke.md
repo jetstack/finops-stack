@@ -14,7 +14,7 @@ This documentation focuses on installing the FinOps Stack in GKE standard/autopi
 - A Google Service Account with the following:
     - roles/monitor.viewer and roles/iam.serviceAccountTokenCreator permissions
     - workload identity configured for grafana kubernetes service account: `[finops-stack/grafana]`. Have a look at this [blog post](https://venafi.com/blog/gke-workload-identity-federation-for-kubernetes-principals/) to configure workload identity.
-- Unless you want to access the Grafana dashboard via `kubectl port-forward` you'll need a domain name
+- Unless you want to access the Grafana dashboard via `kubectl port-forward` you'll need a domain name to set up an external load balancer and ingress, ditto for Goldilocks.
 
 ## Distribution support
 
@@ -27,14 +27,14 @@ This documentation focuses on installing the FinOps Stack in GKE standard/autopi
 ### Configuration changes for your cluster environment
 
 1. To control which Finops Stack components to install, edit the [enabled.yaml](./installation/config/common/enabled.yaml) file
-1. Copy `./env.tmpl` to `./.env` and replace the env var values accordingly. As a minimum, you will need to change the `GCP_PROJECT`, `CSP_API_KEY`,  `GRAFANA_SA_ANNOTATION` values. <!-- TODO: Automate env variable values replacement -->
+1. Copy `./env_gke.tmpl` to `./.env` and replace the env var values accordingly. The file is commented to provide an explanation for each var.
 
 ### Install everything using Helmfile
 
 For the first run:
 
 ```bash
-set -a; source .env; set +a; helmfile apply --interactive
+set -a; source .env; set +a; helmfile apply --interactive --file ./Helmfile_gke.yaml --environment $ENV_TYPE
 ```
 
 NOTE: it will take several minutes for all workloads to install and start running. Helmfile does display its progress in the terminal. All workloads get installed into the `finops-stack` namespace so you can also view progress using `kubectl`.
@@ -42,7 +42,7 @@ NOTE: it will take several minutes for all workloads to install and start runnin
 To speed up subsequent runs:
 
 ```bash
-set -a; source .env; set +a; helmfile apply --interactive --skip-deps
+set -a; source .env; set +a; helmfile apply --interactive --skip-deps --file ./Helmfile_gke.yaml --environment $ENV_TYPE
 ```
 
 ## Optional: Configure ingress for Grafana
@@ -62,7 +62,7 @@ General guidance when configuring ingress:
 ## Enable Goldilocks for namespaces
 
 For Goldilocks to analyse namespaces and add then to its dashboard you need to add this label to the namespace resource: `goldilocks.fairwinds.com/enabled=true`, e.g.  
-`kubectl label ns finops-stack goldilocks.fairwinds.com/enabled=true`
+`kubectl label ns finops-stack goldilocks.fairwinds.com/enabled=true`, to add label to all namespaces: `kubectl label ns --all goldilocks.fairwinds.com/enabled=true`
 
 ## Useful commands
 

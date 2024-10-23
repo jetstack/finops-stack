@@ -1,2 +1,5 @@
 gke:
   podmonitoring: true
+opencost:
+  customPricing:
+    enabled: false

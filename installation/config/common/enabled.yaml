@@ -1,26 +1,32 @@
-# -- Enable / Disable the installation of Kyverno
+# -- Enable / Disable the installation of Kyverno. Only required if you want to also install the FinOps policies.
 kyverno:
   enabled: true
 
-# -- Enable / Disable the installation of Kyverno FinOps Policies
+# -- Enable / Disable the installation of Kyverno FinOps Policies. An installation of Kyverno is required to install these policies.
 finops-policies:
   enabled: true
-# -- Enable / Disable the installation of the VPA Controller
+# -- Enable / Disable the installation of the VPA Controller. VPA is configured to make recommendations only - these are displayed in the Goldilocks dashboard.
 vpa:
   enabled: true
 # -- Enable / Disable the installation of the Grafana
 grafana:
   enabled: true
-# -- Enable / Disable the installation of cert-manager
+# -- Enable / Disable the installation of cert-manager. Required if you want to access Grafana and/or Goldilocks via an FQDN, but don't install if cert-manager already in the cluster.
 cert-manager:
   enabled: false
-# -- Enable / Disable the installation of OpenCost
-opencost:
+# -- Enable / Disable the installation of cert-manager-config. Contains an issuer for Let's Encrypt - don't install if you already have one
+cert-manager-config:
   enabled: false
+
+# -- Enable / Disable the installation of ingress-config. Installs either a) a certificate for Grafana (if you are using standard ingress) or b) HTTPRoutes for Grafana and Golidlocks (if you are using API Gateway)
+ingress-config:
+  enabled: true
+
 # -- Enable / Disable the installation of OpenCost Exporter
 opencost-exporter:
   enabled: true
 
+# -- Enable /disable the installation of configuration for Opencost
 opencost-templates:
   enabled: true
 
