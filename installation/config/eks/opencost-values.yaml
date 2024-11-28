@@ -1,0 +1,13 @@
+cloudCost:
+  enabled: false
+opencost:
+  cloudCost:
+    enabled: false
+  prometheus:
+    external:
+      enabled: true
+      url: http://gmp-proxy
+    internal:
+      enabled: false
+  exporter:
+    cloudProviderApiKey: "dummy_key"

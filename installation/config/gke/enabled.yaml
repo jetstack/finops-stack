@@ -1,0 +1,33 @@
+# -- Enable / Disable the installation of Kyverno
+kyverno:
+  enabled: true
+
+# -- Enable / Disable the installation of Kyverno FinOps Policies
+finops-policies:
+  enabled: true
+# -- Enable / Disable the installation of the VPA Controller
+vpa:
+  enabled: true
+# -- Enable / Disable the installation of the Grafana
+grafana:
+  enabled: true
+# -- Enable / Disable the installation of cert-manager
+cert-manager:
+  enabled: false
+# -- Enable / Disable the installation of OpenCost
+opencost:
+  enabled: false
+# -- Enable / Disable the installation of OpenCost Exporter
+opencost-exporter:
+  enabled: true
+
+opencost-templates:
+  enabled: true
+
+# -- Enable / Disable the installation of GMP Proxy (required when using Google Managed Prometheus)
+gmp-proxy:
+  enabled: true
+
+# -- Enable / Disable the installation of Fairwinds' Goldilocks
+goldilocks:
+  enabled: true

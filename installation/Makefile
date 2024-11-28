@@ -1,10 +1,5 @@
 .DEFAULT_GOAL := help
 
-CLUSTER_NAME := ambient
-PROJECT_ID := "$(shell gcloud config get-value project)"
-M_TYPE := n1-standard-2
-ZONE := europe-west2-a
-
 cluster: ## Setup cluster
 	kind create cluster
 
