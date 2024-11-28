@@ -1,0 +1,13 @@
+features:
+  backgroundScan:
+    skipResourceFilters: false # Important so that background Scan's Exclude Namespaces, etc
+config:
+  resourceFiltersIncludeNamespaces:
+    - kube-system
+  webhooks:
+    - namespaceSelector:
+        matchExpressions:
+          - key: kubernetes.io/metadata.name
+            operator: NotIn
+            values:
+              - kube-system
