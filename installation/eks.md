@@ -2,32 +2,22 @@
 
 Installing Helm charts with lots of dependencies and CRDs is challenging; these instructions use Helmfile to mitigate issues with Helm. 
 
-This documentation focuses on installing the FinOps Stack in GKE standard/autopilot clusters.
+This documentation focuses on installing the FinOps Stack in EKS clusters.
 
 ## Pre-requisites
 
-- A GKE standard or autopilot cluster with:
+- A EKS cluster with:
    - kubectl access 
-   - cluster-admin permissions
-   - workload identity enabled 
+   - (Optional) If your cluster has Spot Instances, EKS Pod Identities need to be configured. See [documentation](https://www.opencost.io/docs/configuration/aws#eks-pod-identities).
 - [Helmfile](https://helmfile.readthedocs.io/en/latest/#installation) installed on your local machine
-- A Google Service Account with the following:
-    - roles/monitor.viewer and roles/iam.serviceAccountTokenCreator permissions
-    - workload identity configured for grafana kubernetes service account: `[finops-stack/grafana]`. Have a look at this [blog post](https://venafi.com/blog/gke-workload-identity-federation-for-kubernetes-principals/) to configure workload identity.
 - Unless you want to access the Grafana dashboard via `kubectl port-forward` you'll need a domain name
-
-## Distribution support
-
-### GKE Autopilot
-
-- Enable cost allocation
 
 ## Installation
 
 ### Configuration changes for your cluster environment
 
 1. To control which Finops Stack components to install, edit the [enabled.yaml](./installation/config/common/enabled.yaml) file
-1. Copy `./env.tmpl` to `./.env` and replace the env var values accordingly. As a minimum, you will need to change the `GCP_PROJECT`, `CSP_API_KEY`,  `GRAFANA_SA_ANNOTATION` values. <!-- TODO: Automate env variable values replacement -->
+1. Copy `./env_eks.tmpl` to `./.env` and replace the env var values accordingly.
 
 ### Install everything using Helmfile
 
