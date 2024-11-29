@@ -11,12 +11,15 @@ opencost:
       # -- Service name of in-cluster Prometheus
       serviceName: prometheus-server
       # -- Namespace of in-cluster Prometheus
-      namespaceName: prometheus-system
+      namespaceName: finops-stack
       # -- Service port of in-cluster Prometheus
       port: 80
   exporter:
-    cloudProviderApiKey: "dummy_key"
-    # Persistent volume claim for storing the data. eg: csv file
+    aws:
+      # -- AWS secret access key
+      secret_access_key: ""
+      # -- AWS secret key id
+      access_key_id: ""
     persistence:
       enabled: false
       # -- Annotations for persistent volume
