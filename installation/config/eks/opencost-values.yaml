@@ -5,9 +5,20 @@ opencost:
     enabled: false
   prometheus:
     external:
-      enabled: true
-      url: http://gmp-proxy
-    internal:
       enabled: false
+      # url: http://prometheus-server
+    internal:
+      # -- Use in-cluster Prometheus
+      enabled: true
+      # -- Service name of in-cluster Prometheus
+      serviceName: prometheus-server
+      # -- Namespace of in-cluster Prometheus
+      namespaceName: finops-stack
+      # -- Service port of in-cluster Prometheus
+      port: 80
   exporter:
-    cloudProviderApiKey: "dummy_key"
+    aws:
+      # -- AWS secret access key
+      secret_access_key: ""
+      # -- AWS secret key id
+      access_key_id: ""
