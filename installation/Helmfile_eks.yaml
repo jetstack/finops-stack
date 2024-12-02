@@ -58,7 +58,7 @@ releases:
         cost-center-label: "xyz"
   - serviceAccount:
       annotations:
-        {{ requiredEnv "CERT_MANAGER_SA_ANNOTATION" }}
+        {{ env "CERT_MANAGER_SA_ANNOTATION" }}
 
 - name: cert-manager-config
   version: "0.1.0"
@@ -69,10 +69,9 @@ releases:
   needs:
   - cert-manager/cert-manager
   values:
-  - email: {{ requiredEnv "CERT_MANAGER_EMAIL" }}
-  - gcpProjectID: {{ requiredEnv "GCP_PROJECT" }}
+  - email: {{ env "CERT_MANAGER_EMAIL" }}
   - grafanaTLSCert:
-      hostname: {{ requiredEnv "GRAFANA_FQDN" }}
+      hostname: {{ env "GRAFANA_FQDN" }}
 
 - name: grafana
   version: "8.4.7"
@@ -82,24 +81,24 @@ releases:
   values:
   - "./config/common/grafana-values.yaml"
   - "./config/{{ requiredEnv "HOST_ENV" }}/grafana-values.yaml"
-  - adminUser: {{ requiredEnv "GRAFANA_ADMIN_USER" }}
-  - adminPassword: {{ requiredEnv "GRAFANA_ADMIN_PW" }}
+  - adminUser: {{ env "GRAFANA_ADMIN_USER" }}
+  - adminPassword: {{ env "GRAFANA_ADMIN_PW" }}
   - serviceAccount:
       annotations:
-        {{ requiredEnv "GRAFANA_SA_ANNOTATION" }}
+        {{ env "GRAFANA_SA_ANNOTATION" }}
 
   # If you don't require ingress via an FQDN remove this ingress section
   - ingress:
-      enabled: {{ requiredEnv "GRAFANA_INGRESS" }}
+      enabled: {{ env "GRAFANA_INGRESS" }}
       annotations:
-        kubernetes.io/ingress.global-static-ip-name: {{ requiredEnv "GRAFANA_PUBLIC_IP_NAME" }}
+        kubernetes.io/ingress.global-static-ip-name: {{ env "GRAFANA_PUBLIC_IP_NAME" }}
       hosts:
-      - {{ requiredEnv "GRAFANA_FQDN" }}
+      - {{ env "GRAFANA_FQDN" }}
     # If you don't require https access to the Grafana dashboard remove this tls section
       tls:
-      - secretName: {{ requiredEnv "GRAFANA_FQDN" }}-tls
+      - secretName: {{ env "GRAFANA_FQDN" }}-tls
         hosts:
-        - {{ requiredEnv "GRAFANA_FQDN" }}
+        - {{ env "GRAFANA_FQDN" }}
   needs:
   - cert-manager/cert-manager
 
@@ -111,30 +110,17 @@ releases:
   values:
   - "./config/common/vpa-values.yaml"
 
-- name: gmp-proxy
-  version: "0.1.0"
-  chart: "../charts/gmp-proxy"
-  condition: gmp-proxy.enabled
-  namespace: finops-stack
-  needs: 
-  - grafana
-  values:
-  - "./config/common/gmp-proxy-values.yaml"
-  - gmpProjectId: {{ requiredEnv "GCP_PROJECT" }}
-
 - name: prometheus-opencost-exporter
   version: "0.1.1"
   chart: "prometheus-opencost-exporter/prometheus-opencost-exporter"
   condition: opencost-exporter.enabled
   namespace: finops-stack
-  needs: 
-  - gmp-proxy
   values:
   - "./config/common/prometheus-opencost-exporter-values.yaml"
   - "./config/{{ requiredEnv "HOST_ENV" }}/prometheus-opencost-exporter-values.yaml"
   - opencost:
       exporter:
-        cloudProviderApiKey: {{ requiredEnv "CSP_API_KEY" }}
+        secret_access_key: {{ env "AWS_ACCESS_KEY" }}
 
 - name: finops-stack-opencost-templates
   version: "0.1.0"
