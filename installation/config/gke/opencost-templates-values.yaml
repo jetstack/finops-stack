@@ -1,2 +1,3 @@
+dashboards: true
 gke:
   podmonitoring: true

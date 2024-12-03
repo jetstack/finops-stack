@@ -1,3 +1,4 @@
+{{ if and .Values.dashboards }}
 {{- range $path, $_ :=  .Files.Glob  "dashboards/**.json" }}
 ---
 apiVersion: v1
@@ -10,4 +11,5 @@ metadata:
 data:
   {{ base $path  }}: |-
     {{ ($.Files.Get $path) | nindent 6 }}
+{{ end }}
 {{ end }}
