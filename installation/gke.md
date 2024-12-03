@@ -34,7 +34,7 @@ This documentation focuses on installing the FinOps Stack in GKE standard/autopi
 For the first run:
 
 ```bash
-set -a; source .env; set +a; helmfile apply --interactive
+set -a; source .env; set +a; helmfile apply --file Helmfile_gke.yaml --interactive
 ```
 
 NOTE: it will take several minutes for all workloads to install and start running. Helmfile does display its progress in the terminal. All workloads get installed into the `finops-stack` namespace so you can also view progress using `kubectl`.
