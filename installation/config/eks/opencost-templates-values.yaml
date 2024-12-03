@@ -1,1 +1,5 @@
 dashboards: true
+opencost:
+  customPricing:
+    # -- This is only to enable custom pricing on on-premises or kind
+    enabled: false
