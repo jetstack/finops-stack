@@ -9,14 +9,11 @@ AWS_ACCESS_KEY_ID=""
 GRAFANA_ADMIN_USER=finops
 GRAFANA_ADMIN_PW=s7@ck
 
-# GCP SA for workload identity
-GRAFANA_SA_ANNOTATION="iam.gke.io/gcp-service-account: sa-name@my-gcp-project.iam.gserviceaccount.com"
-
 # Grafana ingress settings
 GRAFANA_INGRESS="false"
 # GRAFANA_PUBLIC_IP_NAME="name-of-public-ip"
 # GRAFANA_FQDN="grafana.host.name"
 
 ##  GCP SA for workload identity for cert-manager (need to be defined but only used if cert-manager is being installed)
-CERT_MANAGER_SA_ANNOTATION="iam.gke.io/gcp-service-account: cert-manager-sa@my-gcp-project.iam.gserviceaccount.com"
+CERT_MANAGER_SA_ANNOTATION=""
 CERT_MANAGER_EMAIL="issuer@example.com"
