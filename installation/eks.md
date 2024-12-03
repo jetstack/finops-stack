@@ -32,7 +32,7 @@ NOTE: it will take several minutes for all workloads to install and start runnin
 To speed up subsequent runs:
 
 ```bash
-set -a; source .env; set +a; helmfile apply --interactive --skip-deps
+set -a; source .env; set +a; helmfile apply --file Helmfile_eks.yaml --interactive --skip-deps
 ```
 
 ## Optional: Configure ingress for Grafana
