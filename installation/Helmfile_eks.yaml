@@ -118,10 +118,6 @@ releases:
   values:
   - "./config/common/prometheus-opencost-exporter-values.yaml"
   - "./config/{{ requiredEnv "HOST_ENV" }}/prometheus-opencost-exporter-values.yaml"
-  - opencost:
-      exporter:
-        secret_access_key: {{ env "AWS_SECRET_ACCESS_KEY" }}
-        access_key_id: {{ env "AWS_ACCESS_KEY_ID" }}
 
 - name: finops-stack-opencost-templates
   version: "0.1.0"
