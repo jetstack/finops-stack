@@ -1,3 +1,4 @@
+dashboards: true
 opencost:
   configFileName: default
   provider: kind
