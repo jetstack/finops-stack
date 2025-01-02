@@ -10,7 +10,7 @@ This documentation focuses on installing the FinOps Stack in EKS clusters.
    - kubectl access 
    - (Optional) If your cluster has Spot Instances, EKS Pod Identities need to be configured. See [documentation](https://www.opencost.io/docs/configuration/aws#eks-pod-identities).
 - [Helmfile](https://helmfile.readthedocs.io/en/latest/#installation) installed on your local machine
-- Unless you want to access the Grafana dashboard via `kubectl port-forward` you'll need a domain name
+- Unless you want to access the Grafana dashboard via `kubectl port-forward` you'll need a domain name or external public  IP.
 
 ## Installation
 
