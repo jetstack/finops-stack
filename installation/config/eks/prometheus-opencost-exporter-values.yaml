@@ -15,11 +15,6 @@ opencost:
       # -- Service port of in-cluster Prometheus
       port: 80
   exporter:
-    aws:
-      # -- AWS secret access key
-      secret_access_key: ""
-      # -- AWS secret key id
-      access_key_id: ""
     persistence:
       enabled: false
       # -- Annotations for persistent volume
