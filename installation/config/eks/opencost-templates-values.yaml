@@ -3,5 +3,3 @@ opencost:
   customPricing:
     # -- This is only to enable custom pricing on on-premises or kind
     enabled: false
-gke:
-  podmonitoring: true
