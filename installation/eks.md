@@ -35,7 +35,7 @@ To speed up subsequent runs:
 set -a; source .env; set +a; helmfile apply --file Helmfile_eks.yaml --interactive --skip-deps
 ```
 
-## Optional: Configure ingress for Grafana
+## Optional: Making Grafana accessible via DNS
 
 ### Pre-requisites
 
