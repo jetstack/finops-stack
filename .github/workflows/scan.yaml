@@ -4,7 +4,7 @@ jobs:
   kubescape:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: kubescape/github-action@main
       continue-on-error: true
       with:
@@ -15,6 +15,6 @@ jobs:
         # # Optional: Scan a specific path. Default will scan the whole repository
         # files: "examples/*.yaml"
     - name: Upload Kubescape scan results to Github Code Scanning
-      uses: github/codeql-action/upload-sarif@v2
+      uses: github/codeql-action/upload-sarif@v3
       with:
         sarif_file: results.sarif
