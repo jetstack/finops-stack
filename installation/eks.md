@@ -1,8 +1,10 @@
-# Installation using Helmfile
-
-Installing Helm charts with lots of dependencies and CRDs is challenging; these instructions use Helmfile to mitigate issues with Helm. 
+# FinOps Stack on a EKS cluster
 
 This documentation focuses on installing the FinOps Stack in EKS clusters.
+
+## Using Helmfile
+
+Installing Helm charts with lots of dependencies and CRDs is challenging; these instructions use Helmfile to mitigate issues with Helm.
 
 ## Pre-requisites
 

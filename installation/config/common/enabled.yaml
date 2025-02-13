@@ -14,19 +14,19 @@ grafana:
 # -- Enable / Disable the installation of cert-manager
 cert-manager:
   enabled: false
-# -- Enable / Disable the installation of OpenCost
-opencost:
-  enabled: false
 # -- Enable / Disable the installation of OpenCost Exporter
 opencost-exporter:
   enabled: true
+# -- Enable / Disable the installation of Prometheus (required when using EKS or Kind)
+prometheus:
+  enabled: false
 
 opencost-templates:
   enabled: true
 
 # -- Enable / Disable the installation of GMP Proxy (required when using Google Managed Prometheus)
 gmp-proxy:
-  enabled: true
+  enabled: false
 
 # -- Enable / Disable the installation of Fairwinds' Goldilocks
 goldilocks:
