@@ -1,8 +1,12 @@
-# Installation using Helmfile
+# FinOps Stack deployment
 
-Installing Helm charts with lots of dependencies and CRDs is challenging; these instructions use Helmfile to mitigate issues with Helm. 
+This documentation provides instructions for installing the FinOps Stack in Kind cluster for a quick setup.
 
-This documentation provides instructions for installing the FinOps Stack in Kind cluster for a quick setup. For deployment on a GKE cluster, refer to the [gke docs](./gke.md).
+For deployment on a GKE cluster, refer to the [GKE docs](./gke.md) and deployment on a EKS cluster refer to the [EKS docs](./eks.md).
+
+## Using Helmfile
+
+Installing Helm charts with lots of dependencies and CRDs is challenging; these instructions use Helmfile to mitigate issues with Helm.
 
 ## Pre-requisites
 
