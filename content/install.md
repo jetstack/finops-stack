@@ -8,7 +8,9 @@ To simplify installation, the FinOps Stack is installed using a single Helmfile 
 
 The following instructions are designed to work with a Kind cluster for quick setup. For full instructions, prerequisites and customisations, please see the [installation README](https://github.com/jetstack/finops-stack/blob/main/installation/README.md).
 
-To work with GKE standard and GKE autopilot see the [ GKE installation guide]((https://github.com/jetstack/finops-stack/blob/main/installation/README.md))
+To work with GKE standard and GKE autopilot see the [ GKE installation guide]((https://github.com/jetstack/finops-stack/blob/main/installation/gke.md))
+
+To work with EKS cluster see the [ EKS installation guide]((https://github.com/jetstack/finops-stack/blob/main/installation/eks.md))
 
 ### Helmfile 
 
