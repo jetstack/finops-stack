@@ -1,0 +1,16 @@
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        uid: "PFB5ABA51A8A585D7"
+        url: http://prometheus-server
+        isDefault: true
+        editable: true
+ingress:
+  enabled: false
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "ip-name"
+  hosts:
+  - grafana.example.com

@@ -1,0 +1,18 @@
+cloudCost:
+  enabled: false
+opencost:
+  cloudCost:
+    enabled: false
+  prometheus:
+    external:
+      enabled: false
+      # url: http://prometheus-server
+    internal:
+      # -- Use in-cluster Prometheus
+      enabled: true
+      # -- Service name of in-cluster Prometheus
+      serviceName: prometheus-server
+      # -- Namespace of in-cluster Prometheus
+      namespaceName: finops-stack
+      # -- Service port of in-cluster Prometheus
+      port: 80

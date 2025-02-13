@@ -1,0 +1,19 @@
+# Sub-dir under ./config that holds your hosting env specific Helm values.files, e.g. gke
+HOST_ENV=eks
+
+# -- AWS secret access key and access key id
+AWS_SECRET_ACCESS_KEY=""
+AWS_ACCESS_KEY_ID=""
+
+# Grafana admin user credentials
+GRAFANA_ADMIN_USER=finops
+GRAFANA_ADMIN_PW=s7@ck
+
+# Grafana ingress settings
+GRAFANA_INGRESS="false"
+# GRAFANA_PUBLIC_IP_NAME="name-of-public-ip"
+# GRAFANA_FQDN="grafana.host.name"
+
+##  GCP SA for workload identity for cert-manager (need to be defined but only used if cert-manager is being installed)
+CERT_MANAGER_SA_ANNOTATION=""
+CERT_MANAGER_EMAIL="issuer@example.com"

@@ -1,8 +1,6 @@
-# FinOps Stack deployment
+# FinOps Stack on a EKS cluster
 
-This documentation provides instructions for installing the FinOps Stack in Kind cluster for a quick setup.
-
-For deployment on a GKE cluster, refer to the [GKE docs](./gke.md) and deployment on a EKS cluster refer to the [EKS docs](./eks.md).
+This documentation focuses on installing the FinOps Stack in EKS clusters.
 
 ## Using Helmfile
 
@@ -10,35 +8,25 @@ Installing Helm charts with lots of dependencies and CRDs is challenging; these 
 
 ## Pre-requisites
 
-- [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation) installed on your local machine
-- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+- A EKS cluster with:
+   - kubectl access 
+   - (Optional) If your cluster has Spot Instances, EKS Pod Identities need to be configured. See [documentation](https://www.opencost.io/docs/configuration/aws#eks-pod-identities).
 - [Helmfile](https://helmfile.readthedocs.io/en/latest/#installation) installed on your local machine
+- Unless you want to access the Grafana dashboard via `kubectl port-forward` you'll need a domain name or external public  IP.
 
 ## Installation
-
-## Create a kind cluster
-
-```bash
-make cluster
-```
 
 ### Configuration changes for your cluster environment
 
 1. To control which Finops Stack components to install, edit the [enabled.yaml](./installation/config/common/enabled.yaml) file
-1. Copy env.tmpl file and replace the env var values accordingly (`GRAFANA_FQDN` for example).
-
-```sh
-cp ./env.tmpl ./.env
-```
+1. Copy `./env_eks.tmpl` to `./.env` and replace the env var values accordingly.
 
 ### Install everything using Helmfile
 
 For the first run:
 
 ```bash
-make finops-stack
-# FinOps stack is install using Helmfile:
-# set -a; source .env; set +a; helmfile apply --file helmfile_kind.yaml --interactive
+set -a; source .env; set +a; helmfile apply --file Helmfile_eks.yaml --interactive
 ```
 
 NOTE: it will take several minutes for all workloads to install and start running. Helmfile does display its progress in the terminal. All workloads get installed into the `finops-stack` namespace so you can also view progress using `kubectl`.
@@ -46,10 +34,10 @@ NOTE: it will take several minutes for all workloads to install and start runnin
 To speed up subsequent runs:
 
 ```bash
-set -a; source .env; set +a; helmfile apply --interactive --skip-deps
+set -a; source .env; set +a; helmfile apply --file Helmfile_eks.yaml --interactive --skip-deps
 ```
 
-## Optional: Configure ingress for Grafana
+## Optional: Making Grafana accessible via DNS
 
 ### Pre-requisites
 
@@ -65,11 +53,8 @@ General guidance when configuring ingress:
 
 ## Enable Goldilocks for namespaces
 
-For Goldilocks to analyse namespaces and add then to its dashboard you need to add this label to the namespace resource: `goldilocks.fairwinds.com/enabled=true`, e.g:
-
-```bash
-kubectl label ns finops-stack goldilocks.fairwinds.com/enabled=true
-```
+For Goldilocks to analyse namespaces and add then to its dashboard you need to add this label to the namespace resource: `goldilocks.fairwinds.com/enabled=true`, e.g.  
+`kubectl label ns finops-stack goldilocks.fairwinds.com/enabled=true`
 
 ## Useful commands
 

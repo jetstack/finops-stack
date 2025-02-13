@@ -1,8 +1,10 @@
-# Installation using Helmfile
-
-Installing Helm charts with lots of dependencies and CRDs is challenging; these instructions use Helmfile to mitigate issues with Helm. 
+# FinOps Stack on a GKE cluster
 
 This documentation focuses on installing the FinOps Stack in GKE standard/autopilot clusters.
+
+## Using Helmfile
+
+Installing Helm charts with lots of dependencies and CRDs is challenging; these instructions use Helmfile to mitigate issues with Helm.
 
 ## Pre-requisites
 
@@ -27,14 +29,14 @@ This documentation focuses on installing the FinOps Stack in GKE standard/autopi
 ### Configuration changes for your cluster environment
 
 1. To control which Finops Stack components to install, edit the [enabled.yaml](./installation/config/common/enabled.yaml) file
-1. Copy `./env.tmpl` to `./.env` and replace the env var values accordingly. As a minimum, you will need to change the `GCP_PROJECT`, `CSP_API_KEY`,  `GRAFANA_SA_ANNOTATION` values. <!-- TODO: Automate env variable values replacement -->
+1. Copy `./env_gke.tmpl` to `./.env` and replace the env var values accordingly. As a minimum, you will need to change the `GCP_PROJECT`, `CSP_API_KEY`,  `GRAFANA_SA_ANNOTATION` values. <!-- TODO: Automate env variable values replacement -->
 
 ### Install everything using Helmfile
 
 For the first run:
 
 ```bash
-set -a; source .env; set +a; helmfile apply --interactive
+set -a; source .env; set +a; helmfile apply --file Helmfile_gke.yaml --interactive
 ```
 
 NOTE: it will take several minutes for all workloads to install and start running. Helmfile does display its progress in the terminal. All workloads get installed into the `finops-stack` namespace so you can also view progress using `kubectl`.
