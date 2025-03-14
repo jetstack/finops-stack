@@ -11,7 +11,8 @@ Installing Helm charts with lots of dependencies and CRDs is challenging; these 
 - A GKE standard or autopilot cluster with:
    - kubectl access 
    - cluster-admin permissions
-   - workload identity enabled 
+   - workload identity enabled
+   - [Google Managed Prometheus](https://cloud.google.com/stackdriver/docs/managed-prometheus) enabled.
 - [Helmfile](https://helmfile.readthedocs.io/en/latest/#installation) installed on your local machine
 - A Google Service Account with the following:
     - roles/monitor.viewer and roles/iam.serviceAccountTokenCreator permissions
@@ -29,7 +30,7 @@ Installing Helm charts with lots of dependencies and CRDs is challenging; these 
 ### Configuration changes for your cluster environment
 
 1. To control which Finops Stack components to install, edit the [enabled.yaml](./installation/config/common/enabled.yaml) file
-1. Copy `./env_gke.tmpl` to `./.env` and replace the env var values accordingly. As a minimum, you will need to change the `GCP_PROJECT`, `CSP_API_KEY`,  `GRAFANA_SA_ANNOTATION` values. <!-- TODO: Automate env variable values replacement -->
+1. Copy `./env_gke.tmpl` to `./.env` and replace the env var values accordingly. As a minimum, you will need to change the `GCP_PROJECT`, `CSP_API_KEY`,  `GRAFANA_SA_ANNOTATION` values.
 
 ### Install everything using Helmfile
 
