@@ -4,7 +4,7 @@ jobs:
   kubescape:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - uses: kubescape/github-action@main
       continue-on-error: true
       with:
